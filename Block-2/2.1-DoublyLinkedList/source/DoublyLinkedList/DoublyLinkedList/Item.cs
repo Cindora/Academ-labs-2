@@ -20,10 +20,6 @@ namespace LinkedList
             }
         }
 
-        public Item(T data)
-        {
-            Data = data;
-        }
-
+        public Item(T data) => Data = data;
     }
 }
