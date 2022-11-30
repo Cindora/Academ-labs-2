@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LinkedList
+﻿namespace LinkedList
 {
     public class Item<T>
     {

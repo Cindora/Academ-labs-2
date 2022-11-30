@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LinkedList
 {
-    public class DoublyLinkedList<T>
+    public class DoublyLinkedList<T> : IEnumerable<T>
     {
         public Item<T> First { get; set; }
         public Item<T> Last { get; set; }
@@ -179,7 +179,7 @@ namespace LinkedList
 
         public bool Equals(Object obj)
         {
-            DoublyLinkedList<T> list = (DoublyLinkedList<T>) obj;
+            DoublyLinkedList<T> list = (DoublyLinkedList<T>)obj;
 
             var current = First;
             var currentObj = list.First;
@@ -279,6 +279,165 @@ namespace LinkedList
             return;
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)this).GetEnumerator();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            var current = First;
+
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
+
+
+    }
+
+    public static class ListExtensions
+    {
+        public static bool Any<TSource>(this IEnumerable<TSource> list)
+        {
+            return list.Select(item => item != null).FirstOrDefault();
+        }
+
+        public static int Count<TSource>(this IEnumerable<TSource> list)
+        {
+            var count = 0;
+            foreach (var item in list)
+            {
+                if (item != null)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public static TSource ElementAt<TSource>(this IEnumerable<TSource> list, Int32 index)
+        {
+            var i = 0;
+            foreach (var item in list)
+            {
+                if (i == index)
+                {
+                    return item;
+                }
+
+                i++;
+            }
+
+            throw new ArgumentOutOfRangeException();
+        }
+
+        public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> list, Int32 index)
+        {
+            var i = 0;
+            foreach (var item in list)
+            {
+                if (i == index)
+                {
+                    return item;
+                }
+                i++;
+            }
+            return default;
+        }
+
+        public static TSource First<TSource>(this IEnumerable<TSource> list)
+        {
+            foreach (var item in list)
+            {
+                return item;
+            }
+
+            throw new ArgumentNullException();
+        }
+
+        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> list)
+        {
+            foreach (var item in list)
+            {
+                return item;
+            }
+            return default;
+        }
+
+        public static TSource Last<TSource>(this IEnumerable<TSource> list)
+        {
+            TSource tmpItem = default;
+            var count = 0;
+            foreach (var item in list)
+            {
+                tmpItem = item;
+                count++;
+            }
+
+            return count != 0 ? tmpItem : throw new ArgumentNullException();
+        }
+
+        
+        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> list)
+        {
+            TSource tmpItem = default;
+            var count = 0;
+            foreach (var item in list)
+            {
+                tmpItem = item;
+                count++;
+            }
+            return count != 0 ? tmpItem : default;
+        }
+
+        public static TSource Max<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        {
+            if (list.Any())
+            {
+                var max = list.First();
+                foreach (var item in list)
+                {
+                    if (item.CompareTo(max) == 1)
+                    {
+                        max = item;
+                    }
+                }
+
+                return max;
+            }
+            throw new ArgumentNullException();
+        }
+
+        public static TSource Min<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        {
+            if (list.Any())
+            {
+                var min = list.First();
+                foreach (var item in list)
+                {
+                    if (item.CompareTo(min) == -1)
+                    {
+                        min = item;
+                    }
+                }
+
+                return min;
+            }
+            throw new ArgumentNullException();
+        }
+
+        public static IEnumerable<TSource> MyReverse<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        {
+            var tmpList = new DoublyLinkedList<TSource>();
+            foreach (var item in list)
+            {
+                tmpList.AddFirst(item);
+            }
+            return tmpList;
+        }
 
     }
 }
