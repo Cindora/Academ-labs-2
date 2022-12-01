@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,19 +12,20 @@ namespace LinkedList
     {
         static void Main()
         {
-            var list = new DoublyLinkedList<String>();
-            for (var i = 0; i < 10; i++)
-            {
-                list.AddLast("a" + i.ToString());
-            }
-            var result = 0;
 
+            string[] InputData = File.ReadLines("../../../test.txt").Skip(1).First().Split(' ');
+            
+            /*{
+                string[] words = line.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                for(int i = 1; i < words.Length; i++)
+                {
+                    System.Console.WriteLine(i + words[i]);
+                }
 
+                counter++;
+            }*/
 
-
-            Console.WriteLine();
-
-
+        
         }
     }
 }

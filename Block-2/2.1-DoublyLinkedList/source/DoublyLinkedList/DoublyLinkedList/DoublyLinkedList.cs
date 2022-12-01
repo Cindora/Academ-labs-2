@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LinkedList
@@ -29,6 +30,15 @@ namespace LinkedList
             Count = 1;
         }
 
+        public DoublyLinkedList(IEnumerable<T> list)
+        {
+            Count = 0;
+            foreach (var item in list)
+            {
+                AddLast(item);
+            }
+        }
+
         public void Display()
         {
             var current = First;
@@ -38,23 +48,6 @@ namespace LinkedList
                 Console.WriteLine(current.Data);
                 current = current.Next;
             }
-        }
-
-        public void Add(Item<T> item)
-        {
-            if (Count == 0)
-            {
-                First = item;
-                Last = item;
-                Count = 1;
-                return;
-            }
-
-            Last.Next = item;
-            item.Previous = Last;
-            item.Next = null;
-            Last = item;
-            Count++;
         }
 
         public void AddAfter(Item<T> node, T data)
@@ -76,7 +69,10 @@ namespace LinkedList
                     { current.Next.Previous = item; }
                     current.Next = item;
                     item.Previous = current;
+                    if (i == Count)
+                        Last = item;
                     Count++;
+                    return;
                 }
                 current = current.Next;
             }
@@ -85,12 +81,13 @@ namespace LinkedList
         public void AddBefore(Item<T> node, T data)
         {
             var item = new Item<T>(data);
-            var current = Last;
+            var current = First;
 
             if (Count == 0)
             {
                 throw new ArgumentNullException();
             }
+
 
             for (int i = 0; i < Count; i++)
             {
@@ -102,8 +99,11 @@ namespace LinkedList
                     current.Previous = item;
                     item.Next = current;
                     Count++;
+                    if (i == 0)
+                        First = item;
+                    return;
                 }
-                current = current.Previous;
+                current = current.Next;
             }
         }
 
@@ -114,7 +114,8 @@ namespace LinkedList
             if (Count == 0)
             {
                 First = item;
-                Last = item;
+                Last = First;
+                item.Next = First;
                 Count = 1;
                 return;
             }
@@ -143,6 +144,24 @@ namespace LinkedList
             Last = item;
             Last.Previous.Next = item;
             Count++;
+        }
+
+        public void AddLast(Item<T> node)
+        {
+            if (null == First) // Если список пустой.
+            {
+                First = node;
+                Last = node;
+                Last.Next = First;
+            }
+            else
+            {
+                node.Next = First;
+                Last.Next = node;
+                Last = node;
+            }
+
+            Count += 1;
         }
 
         public void Clear()
@@ -237,7 +256,7 @@ namespace LinkedList
             Count--;
         }
 
-        public void Remove(T data)
+        public bool Remove(T data)
         {
             if (Count != 0)
             {
@@ -251,12 +270,13 @@ namespace LinkedList
                         else if (current == Last)
                         { Last = current.Previous; }
                         RemoveItem(current);
-                        return;
+                        return true;
                     }
 
                     current = current.Next;
                 }
             }
+            return false;
         }
 
         public void RemoveFirst()
@@ -300,12 +320,12 @@ namespace LinkedList
 
     public static class ListExtensions
     {
-        public static bool Any<TSource>(this IEnumerable<TSource> list)
+        public static bool _Any<TSource>(this IEnumerable<TSource> list)
         {
             return list.Select(item => item != null).FirstOrDefault();
         }
 
-        public static int Count<TSource>(this IEnumerable<TSource> list)
+        public static int _Count<TSource>(this IEnumerable<TSource> list)
         {
             var count = 0;
             foreach (var item in list)
@@ -318,7 +338,7 @@ namespace LinkedList
             return count;
         }
 
-        public static TSource ElementAt<TSource>(this IEnumerable<TSource> list, Int32 index)
+        public static TSource _ElementAt<TSource>(this IEnumerable<TSource> list, Int32 index)
         {
             var i = 0;
             foreach (var item in list)
@@ -334,7 +354,7 @@ namespace LinkedList
             throw new ArgumentOutOfRangeException();
         }
 
-        public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> list, Int32 index)
+        public static TSource _ElementAtOrDefault<TSource>(this IEnumerable<TSource> list, Int32 index)
         {
             var i = 0;
             foreach (var item in list)
@@ -348,7 +368,7 @@ namespace LinkedList
             return default;
         }
 
-        public static TSource First<TSource>(this IEnumerable<TSource> list)
+        public static TSource _First<TSource>(this IEnumerable<TSource> list)
         {
             foreach (var item in list)
             {
@@ -358,7 +378,7 @@ namespace LinkedList
             throw new ArgumentNullException();
         }
 
-        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> list)
+        public static TSource _FirstOrDefault<TSource>(this IEnumerable<TSource> list)
         {
             foreach (var item in list)
             {
@@ -367,7 +387,7 @@ namespace LinkedList
             return default;
         }
 
-        public static TSource Last<TSource>(this IEnumerable<TSource> list)
+        public static TSource _Last<TSource>(this IEnumerable<TSource> list)
         {
             TSource tmpItem = default;
             var count = 0;
@@ -381,7 +401,7 @@ namespace LinkedList
         }
 
         
-        public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> list)
+        public static TSource _LastOrDefault<TSource>(this IEnumerable<TSource> list)
         {
             TSource tmpItem = default;
             var count = 0;
@@ -393,9 +413,9 @@ namespace LinkedList
             return count != 0 ? tmpItem : default;
         }
 
-        public static TSource Max<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        public static TSource _Max<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
         {
-            if (list.Any())
+            if (list._Any())
             {
                 var max = list.First();
                 foreach (var item in list)
@@ -411,9 +431,9 @@ namespace LinkedList
             throw new ArgumentNullException();
         }
 
-        public static TSource Min<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        public static TSource _Min<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
         {
-            if (list.Any())
+            if (list._Any())
             {
                 var min = list.First();
                 foreach (var item in list)
@@ -429,7 +449,7 @@ namespace LinkedList
             throw new ArgumentNullException();
         }
 
-        public static IEnumerable<TSource> MyReverse<TSource>(this IEnumerable<TSource> list) where TSource : IComparable
+        public static IEnumerable<TSource> _Reverse<TSource>(this IEnumerable<TSource> list)
         {
             var tmpList = new DoublyLinkedList<TSource>();
             foreach (var item in list)

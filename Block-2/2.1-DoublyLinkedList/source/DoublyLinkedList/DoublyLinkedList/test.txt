@@ -1,0 +1,2 @@
+﻿Enter 5 string and 5 float elements separated by spaces in the line below
+aaa bbb ccc ddd eee 111,1 222,2 333,3 444,4 555,5
