@@ -9,49 +9,33 @@ using NUnit.Framework.Interfaces;
 
 namespace DoublyLinkedListTests
 {
-    
     [TestFixture]
     public class DoublyLinkedListTests
     {
-        public string[] InputStr
-        {
-            get
-            {
-                try
-                {
-                    string[] input = File.ReadLines("../../../test.txt").Skip(1).First().Split(' ');
-                    string[] inputstr = new string[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        inputstr[i] = input[i];
-                    }
-                    return inputstr;
+        public string[] InputStr { get; set; }
+        public float[] InputFloat { get; set; }
 
-                }
-                catch
-                {
-                    throw new Exception();
-                }
-            }
-        }
-        public float[] InputFloat
+        public DoublyLinkedListTests()
         {
-            get
+            try
             {
-                try
+                string[] input = File.ReadLines("../../../test.txt").Skip(1).First().Split(' ');
+                string[] inputstr = new string[5];
+                for (int i = 0; i < 5; i++)
                 {
-                    string[] input = File.ReadLines("../../../test.txt").Skip(1).First().Split(' ');
-                    float[] inputfloat = new float[5];
-                    for (int i = 5; i < 10; i++)
-                    {
-                        inputfloat[i-5] = float.Parse(input[i]);
-                    }
-                    return inputfloat;
+                    inputstr[i] = input[i];
                 }
-                catch
+                InputStr = inputstr;
+                float[] inputfloat = new float[5];
+                for (int i = 5; i < 10; i++)
                 {
-                    throw new Exception();
+                    inputfloat[i - 5] = float.Parse(input[i]);
                 }
+                InputFloat = inputfloat;
+            }
+            catch
+            {
+                throw new Exception();
             }
         }
 
@@ -59,7 +43,7 @@ namespace DoublyLinkedListTests
         //DoublyLinkedList(IEnumerable<T> list)
         public void DoublyLinkedList()
         {
-            
+
             var itemList = new List<float>();
             itemList.Add(InputFloat[0]);
             itemList.Add(InputFloat[1]);
@@ -311,7 +295,7 @@ namespace DoublyLinkedListTests
 
             Assert.AreEqual(true, deleteResult);
         }
-        
+
         [Test]
         //RemoveFirst()
         public void RemoveFirst()
@@ -501,7 +485,7 @@ namespace DoublyLinkedListTests
 
             var result = list._ElementAtOrDefault(3);
 
-            Assert.AreEqual(0, result);   
+            Assert.AreEqual(0, result);
         }
 
         [Test]
@@ -602,7 +586,7 @@ namespace DoublyLinkedListTests
 
             Assert.AreEqual(InputFloat.Max(), result);
         }
-        
+
         [Test]
         //Min<TSource>(IEnumerable<TSource>)
         public void Min()

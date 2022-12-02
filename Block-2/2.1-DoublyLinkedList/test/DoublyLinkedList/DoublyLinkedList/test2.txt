@@ -1,0 +1,2 @@
+﻿Enter 5 string and 5 float elements separated by spaces in the line below
+First Second Third Fourth Fifth 100 200 300 400 500
