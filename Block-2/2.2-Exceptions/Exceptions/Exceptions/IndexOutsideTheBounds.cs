@@ -12,6 +12,6 @@ public class IndexOutsideTheBounds
             for (int i = 0; i <= count; i++)
                 array[i] = i;
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (IndexOutOfRangeException e) { Console.WriteLine(e.Message); }
     }
 }

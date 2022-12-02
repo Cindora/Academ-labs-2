@@ -11,6 +11,6 @@ public class Overflow
             int number = 2147483647;
             int res = checked(number + 1);
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (OverflowException e) { Console.WriteLine(e.Message); }
     }
 }

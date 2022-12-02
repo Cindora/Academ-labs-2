@@ -14,7 +14,7 @@ namespace Exceptions
             {
                 stringBuilder.Insert(0, "World!", 1);
             }
-            catch (Exception e) { Console.WriteLine(e.Message); }
+            catch (OutOfMemoryException e) { Console.WriteLine(e.Message); }
         }
     }
 }

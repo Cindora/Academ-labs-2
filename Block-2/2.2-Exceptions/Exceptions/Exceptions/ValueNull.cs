@@ -12,7 +12,7 @@ public class ValueNull
             string _empty = " ";
             var res = string.Join(_empty, _null);
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (ArgumentNullException e) { Console.WriteLine(e.Message); }
 
     }
 }

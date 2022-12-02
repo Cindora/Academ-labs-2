@@ -1,17 +1,23 @@
 using System;
 
-namespace Exceptions;
+namespace ExceptionsHandling;
 
 public class UnableCast
 {
-    public void _UnableCast()
+    public int _UnableCast(bool _bool)
     {
         try
         {
             Object _object = new Object();
-            Table personId = (Table)_object;
+            if (_bool)
+            {
+                Table personId = (Table)_object;
+            }
+            return 0;
         }
-        catch (InvalidCastException e) { Console.WriteLine(e.Message); }
+        catch (InvalidCastException e) { 
+            return -1;
+        }
     }
 }
 

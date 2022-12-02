@@ -15,6 +15,6 @@ public class IndexOutOfRange
 
             Console.WriteLine(list[count]);
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (ArgumentOutOfRangeException e) { Console.WriteLine(e.Message); }
     }
 }

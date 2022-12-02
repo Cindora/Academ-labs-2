@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Exceptions;
+namespace ExceptionsHandling;
 
 public class IncompatibleType
 {
-    public void _IncompatibleType()
+    public int _IncompatibleType()
     {
         string type = string.Empty;
         try
@@ -13,7 +13,11 @@ public class IncompatibleType
             type = array.GetType().Name;
             array[0] = new object();
             Console.WriteLine(string.Format("{0}, {1}", type, string.Join(" ", array)));
+            return 0;
         }
-        catch (ArrayTypeMismatchException e) { Console.WriteLine(e.Message); }
+        catch (ArrayTypeMismatchException e) { 
+            Console.WriteLine(e.Message);
+            return (-1);
+        }
     }
 }

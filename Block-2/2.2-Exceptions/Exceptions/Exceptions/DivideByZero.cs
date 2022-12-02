@@ -10,6 +10,6 @@ public class DivideByZero
         {
             var res = dividend / divider;
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (DivideByZeroException e) { Console.WriteLine(e.Message); }
     }
 }

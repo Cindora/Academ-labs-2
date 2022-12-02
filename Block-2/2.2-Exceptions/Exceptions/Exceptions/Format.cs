@@ -10,6 +10,6 @@ public class Format
         {
             var res = int.Parse(str);
         }
-        catch (Exception e) { Console.WriteLine(e.Message); }
+        catch (FormatException e) { Console.WriteLine(e.Message); }
     }
 }
