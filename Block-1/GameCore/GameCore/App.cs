@@ -13,13 +13,18 @@ namespace GameCore
         
         static void Main(string[] args)
         {
-            string key;
+            ConsoleKey key;
+            int Is_Hero_Picked = -1;
             do
             {
                 Menus.Menu();
-                key = Menus.Descriptions();
-                Console.ReadKey();
-            } while (key != "Escape");
+                key = Menus.ClassesDescriptions();
+                if (key!=ConsoleKey.Escape)
+                {
+                    Is_Hero_Picked = Menus.HeroesPick(key);
+                }
+                
+            } while (key != ConsoleKey.Escape && Is_Hero_Picked == -1);
         }
     }
 }

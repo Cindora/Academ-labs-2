@@ -36,42 +36,70 @@ namespace GameCore
             Footer();
         }
 
-        public static string Descriptions()
+        public static ConsoleKey ClassesDescriptions()
         {
-            string key;
+            ConsoleKey cur_key;
             do
             {
-                key = Console.ReadKey().Key.ToString();
-                switch (key)
+                cur_key = Console.ReadKey().Key;
+                switch (cur_key)
                 {
-                    case "D1":
+                    case ConsoleKey.D1:
                         Header();
                         Vanguard.description();
                         Footer();
-                        return key;
-                    case "D2":
+                        return cur_key;
+                    case ConsoleKey.D2:
                         Header();
                         Assassin.description();
                         Footer();
-                        return key;
-                    case "D3":
+                        return cur_key;
+                    case ConsoleKey.D3:
                         Header();
                         Heavy.description();
                         Footer();
-                        return key;
-                    case "D4":
+                        return cur_key;
+                    case ConsoleKey.D4:
                         Header();
                         Hybrid.description();
                         Footer();
-                        return key;
-                    case "Escape":
+                        return cur_key;
+                    case ConsoleKey.Escape:
                         break;
                     default:
                         Menu();
                         break;
                 }
-            } while (key!="Escape");
-            return key;
+            } while (cur_key != ConsoleKey.Escape);
+            return cur_key;
+        }
+
+        public static int HeroesPick(ConsoleKey key)
+        {
+            ConsoleKey cur_key;
+            do
+            {
+                cur_key = Console.ReadKey().Key;
+                switch (cur_key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.D2:
+                    case ConsoleKey.D3:
+                    case ConsoleKey.D4:
+                        Header();
+                        var hero_number = 4 * ((int)key - 49) +
+                            (int)cur_key - 49;
+                        Console.WriteLine($"Вы выбрали: {Constants.Names[hero_number]}.");
+                        Footer();
+                        return hero_number;
+                    case ConsoleKey.Escape:
+                        break;
+                    default:
+                        Menu();
+                        break;
+                }
+            } while (cur_key != ConsoleKey.Escape);
+            return -1;
         }
     }
 }
