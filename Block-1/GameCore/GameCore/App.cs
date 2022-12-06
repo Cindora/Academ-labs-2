@@ -10,21 +10,40 @@ namespace GameCore
 {
     class App
     {
-        
+
         static void Main(string[] args)
         {
             ConsoleKey key;
-            int Is_Hero_Picked = -1;
+            MenuLevel MenuLevel = MenuLevel.GameType;
             do
             {
-                Menus.Menu();
-                key = Menus.ClassesDescriptions();
-                if (key!=ConsoleKey.Escape)
+                if (MenuLevel == MenuLevel.GameType)
                 {
-                    Is_Hero_Picked = Menus.HeroesPick(key);
+                    if (Menus.GameType() != GameType.NULL)
+                    {
+                        MenuLevel = MenuLevel.ClassesDescriptions;
+                    }
+                    else
+                    {
+                        MenuLevel = MenuLevel.NULL;
+                    }
                 }
-                
-            } while (key != ConsoleKey.Escape && Is_Hero_Picked == -1);
+
+                if (MenuLevel == MenuLevel.ClassesDescriptions)
+                {
+                    key = Menus.ClassesDescriptions();
+                    if (key != ConsoleKey.Escape)
+                    {
+                        //MenuLevel = MenuLevel.HeroesPick;
+                        Menus.HeroesPick(key);
+                    }
+                    else
+                    {
+                        MenuLevel = MenuLevel.GameType;
+                    }
+                }
+            } while (MenuLevel != MenuLevel.NULL);
+            
         }
     }
 }
