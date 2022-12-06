@@ -6,9 +6,11 @@ namespace GameCore
     public abstract class Hero
     {
         public Constants.NamesID NameID;
+        public string Name;
         public Constants.ClassesID ClassID;
         public int MaxHealthPoints;
         public int HealthPoints;
+        public int PrevHealthPoints;
         public int DamagePoints;
         public bool isAlive;
 
@@ -17,29 +19,41 @@ namespace GameCore
             isAlive = true;
         }
 
+        public void EquatePrevHealthPoints()
+        {
+            PrevHealthPoints = HealthPoints;
+        }
+
         public void GetDamage(int dmg)
         {
+            PrevHealthPoints = HealthPoints;
             HealthPoints -= dmg;
             if (HealthPoints <= 0)
+            {
+                HealthPoints = 0;
                 isAlive = false;
+            }
         }
 
         public void GetHealth(int hp)
         {
+            PrevHealthPoints = HealthPoints;
             HealthPoints += hp;
             if (HealthPoints > (int)MaxHealthPoints)
                 HealthPoints = (int)MaxHealthPoints;
         }
     }
 
-    public abstract class Vanguard : Hero
+    public class Vanguard : Hero
     {
         public Vanguard(NamesID NameID) : base()
         {
             this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
             ClassID = ClassesID.Vanguard;
             MaxHealthPoints = (int)_MaxHealthPoints.Vanguard;
             HealthPoints = MaxHealthPoints;
+            PrevHealthPoints = HealthPoints;
             DamagePoints = (int)_DamagePoints.Vanguard;
         }
 
@@ -54,14 +68,16 @@ namespace GameCore
         }
     }
 
-    public abstract class Assassin : Hero
+    public class Assassin : Hero
     {
         public Assassin(NamesID NameID) : base()
         {
             this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
             ClassID = ClassesID.Assassin;
             MaxHealthPoints = (int)_MaxHealthPoints.Assassin;
             HealthPoints = MaxHealthPoints;
+            PrevHealthPoints = HealthPoints;
             DamagePoints = (int)_DamagePoints.Assassin;
         }
 
@@ -76,14 +92,16 @@ namespace GameCore
         }
     }
 
-    public abstract class Heavy : Hero
+    public class Heavy : Hero
     {
         public Heavy(NamesID NameID) : base()
         {
             this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
             ClassID = ClassesID.Heavy;
             MaxHealthPoints = (int)_MaxHealthPoints.Heavy;
             HealthPoints = MaxHealthPoints;
+            PrevHealthPoints = HealthPoints;
             DamagePoints = (int)_DamagePoints.Heavy;
         }
 
@@ -98,14 +116,16 @@ namespace GameCore
         }
     }
 
-    public abstract class Hybrid : Hero
+    public class Hybrid : Hero
     {
         public Hybrid(NamesID NameID) : base()
         {
             this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
             ClassID = ClassesID.Hybrid;
             MaxHealthPoints = (int)_MaxHealthPoints.Hybrid;
             HealthPoints = MaxHealthPoints;
+            PrevHealthPoints = HealthPoints;
             DamagePoints = (int)_DamagePoints.Hybrid;
         }
 

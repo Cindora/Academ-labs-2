@@ -18,7 +18,7 @@ namespace GameCore
             Console.SetCursorPosition(Console.WindowWidth / 2 - MenuStr[0].Length / 2, 0);
             Console.WriteLine(MenuStr[0]);
         }
-        static void Footer()
+        public static void Footer()
         {
             Console.SetCursorPosition(0, Console.WindowHeight - 1);
             Console.Write("ESC чтобы вернуться. ");
@@ -120,12 +120,7 @@ namespace GameCore
                     case ConsoleKey.D2:
                     case ConsoleKey.D3:
                     case ConsoleKey.D4:
-                        Header();
-                        var hero_number = 4 * ((int)key - 49) +
-                            (int)cur_key - 49;
-                        Console.WriteLine($"Вы выбрали: {Constants.Names[hero_number]}.");
-                        Footer();
-                        return hero_number;
+                        return 4 * ((int)key - 49) + (int)cur_key - 49; ;
                     case ConsoleKey.Escape:
                         break;
                     default:
@@ -135,5 +130,36 @@ namespace GameCore
             } while (cur_key != ConsoleKey.Escape);
             return -1;
         }
+
+        public static void DisplayStatus(Hero Hero1, Hero Hero2, int curr_Hero_ID)
+        {
+            Header();
+
+            Hero current_Hero;
+            for (int i = 0; i < 2; i++)
+            {
+                int current_width = Console.WindowWidth / 6 * (i*3);
+
+                current_Hero = i == 0 ? Hero1 : Hero2;
+
+                Console.SetCursorPosition(current_width, 2);
+
+                Console.Write($"Игрок {i+1}");
+                if (i == curr_Hero_ID)
+                    Console.Write(" (Ваш ход)");
+                Console.SetCursorPosition(current_width, 4);
+                string HealthDiff = current_Hero.PrevHealthPoints != current_Hero.HealthPoints ?
+                    $"{current_Hero.PrevHealthPoints} -> " : "";
+                Console.WriteLine($"{current_Hero.Name}, {HealthDiff}{current_Hero.HealthPoints} здоровья.");
+                Console.SetCursorPosition(current_width, 6);
+                Console.Write($"1: Атаковать ({current_Hero.DamagePoints} урона).");
+                Console.SetCursorPosition(current_width, 7);
+                Console.Write($"2: Залечить раны (+15 здоровья).");
+            }
+
+            Footer();
+        }
+
+
     }
 }

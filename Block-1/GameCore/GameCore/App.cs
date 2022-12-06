@@ -13,37 +13,31 @@ namespace GameCore
 
         static void Main(string[] args)
         {
-            ConsoleKey key;
+            
             MenuLevel MenuLevel = MenuLevel.GameType;
             do
             {
                 if (MenuLevel == MenuLevel.GameType)
                 {
-                    if (Menus.GameType() != GameType.NULL)
+                    switch (Menus.GameType())
                     {
-                        MenuLevel = MenuLevel.ClassesDescriptions;
-                    }
-                    else
-                    {
-                        MenuLevel = MenuLevel.NULL;
+                        case GameType.PvP:
+                            MenuLevel = GameModes.PvP_Duel();
+                            break;
+                        case GameType.PvE:
+                            MenuLevel = GameModes.PvE_Duel();
+                            break;
+                        case GameType.EvE:
+                            MenuLevel = GameModes.EvE_Duel();
+                            break;
+                        case GameType.NULL:
+                            MenuLevel = MenuLevel.NULL;
+                            break;
                     }
                 }
 
-                if (MenuLevel == MenuLevel.ClassesDescriptions)
-                {
-                    key = Menus.ClassesDescriptions();
-                    if (key != ConsoleKey.Escape)
-                    {
-                        //MenuLevel = MenuLevel.HeroesPick;
-                        Menus.HeroesPick(key);
-                    }
-                    else
-                    {
-                        MenuLevel = MenuLevel.GameType;
-                    }
-                }
+
             } while (MenuLevel != MenuLevel.NULL);
-            
         }
     }
 }
