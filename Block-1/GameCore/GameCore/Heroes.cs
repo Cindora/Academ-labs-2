@@ -35,10 +35,10 @@ namespace GameCore
             }
         }
 
-        public void GetHealth(int hp)
+        public void GetHealth()
         {
             PrevHealthPoints = HealthPoints;
-            HealthPoints += hp;
+            HealthPoints += Healing_Amount;
             if (HealthPoints > (int)MaxHealthPoints)
                 HealthPoints = (int)MaxHealthPoints;
         }
@@ -59,10 +59,20 @@ namespace GameCore
 
         public static void description()
         {
-            Console.WriteLine($"Боец авангарда. Имеет {(int)_MaxHealthPoints.Vanguard} очков здоровья, " +
-                $"{(int)_DamagePoints.Vanguard} урона.\nДоступные герои: ");
+            string[] description = {$"Боец авангарда. Имеет {(int)_MaxHealthPoints.Vanguard} очков здоровья, " +
+                $"{(int)_DamagePoints.Vanguard} урона.", "Доступные герои: "};
+
+            Line_Number = 2;
+
+            Console.SetCursorPosition(WindowWidth / 2 - description[0].Length / 2, Line_Number++);
+            Console.Write(description[0]);
+            Console.SetCursorPosition(WindowWidth / 2 - description[1].Length / 2, Line_Number);
+            Console.Write(description[1]);
+
+            Line_Number = 4;
             for (int i = 0; i < 4; i++)
             {
+                Console.SetCursorPosition(WindowWidth / 2 - 5, Line_Number++);
                 Console.WriteLine($"{i + 1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Vanguard]}.");
             }
         }
@@ -83,10 +93,20 @@ namespace GameCore
 
         public static void description()
         {
-            Console.WriteLine($"Боец-ассасин. Имеет {(int)_MaxHealthPoints.Assassin} очков здоровья, " +
-                $"{(int)_DamagePoints.Assassin} урона.\nДоступные герои: ");
+            string[] description = {$"Боец-ассасин. Имеет {(int)_MaxHealthPoints.Assassin} очков здоровья, " +
+                $"{(int)_DamagePoints.Assassin} урона.", "Доступные герои: "};
+
+            Line_Number = 2;
+
+            Console.SetCursorPosition(WindowWidth / 2 - description[0].Length / 2, Line_Number++);
+            Console.Write(description[0]);
+            Console.SetCursorPosition(WindowWidth / 2 - description[1].Length / 2, Line_Number);
+            Console.Write(description[1]);
+
+            Line_Number = 4;
             for (int i = 0; i < 4; i++)
             {
+                Console.SetCursorPosition(WindowWidth / 2 - 7, Line_Number++);
                 Console.WriteLine($"{i + 1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Assassin]}.");
             }
         }
@@ -107,11 +127,21 @@ namespace GameCore
 
         public static void description()
         {
-            Console.WriteLine($"Боец-защитник. Имеет {(int)_MaxHealthPoints.Heavy} очков здоровья, " +
-                $"{(int)_DamagePoints.Heavy} урона.\nДоступные герои: ");
+            string[] description = {$"Боец-защитник. Имеет {(int)_MaxHealthPoints.Heavy} очков здоровья, " +
+                $"{(int)_DamagePoints.Heavy} урона.", "Доступные герои: "};
+
+            Line_Number = 2;
+
+            Console.SetCursorPosition(WindowWidth / 2 - description[0].Length / 2, Line_Number++);
+            Console.Write(description[0]);
+            Console.SetCursorPosition(WindowWidth / 2 - description[1].Length / 2, Line_Number);
+            Console.Write(description[1]);
+
+            Line_Number = 4;
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine($"{i+1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Heavy]}.");
+                Console.SetCursorPosition(WindowWidth / 2 - 7, Line_Number++);
+                Console.WriteLine($"{i + 1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Heavy]}.");
             }
         }
     }
@@ -131,11 +161,21 @@ namespace GameCore
 
         public static void description()
         {
-            Console.WriteLine($"Боец-гибрид. Имеет {(int)_MaxHealthPoints.Hybrid} очков здоровья, " +
-                $"{(int)_DamagePoints.Hybrid} урона.\nДоступные герои: ");
+            string[] description = {$"Боец-гибрид. Имеет {(int)_MaxHealthPoints.Hybrid} очков здоровья, " +
+                $"{(int)_DamagePoints.Hybrid} урона.", "Доступные герои: "};
+
+            Line_Number = 2;
+
+            Console.SetCursorPosition(WindowWidth / 2 - description[0].Length / 2, Line_Number++);
+            Console.Write(description[0]);
+            Console.SetCursorPosition(WindowWidth / 2 - description[1].Length / 2, Line_Number);
+            Console.Write(description[1]);
+
+            Line_Number = 4;
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine($"{i+1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Hybrid]}.");
+                Console.SetCursorPosition(WindowWidth / 2 - 7, Line_Number++);
+                Console.WriteLine($"{i + 1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Hybrid]}.");
             }
         }
     }

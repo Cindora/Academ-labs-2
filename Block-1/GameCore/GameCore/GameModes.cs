@@ -14,6 +14,22 @@ namespace GameCore
 
         static GameType gameType;
 
+        static int AI(Hero current_Hero, Hero opponent_Hero)
+        {
+            Random ran = new Random();
+
+            if (opponent_Hero.HealthPoints <= current_Hero.DamagePoints ||
+                current_Hero.HealthPoints == current_Hero.MaxHealthPoints)
+                return 1;
+            else if (opponent_Hero.HealthPoints <= 2 * current_Hero.DamagePoints &&
+                current_Hero.HealthPoints > opponent_Hero.DamagePoints)
+                return 1;
+            else if (current_Hero.HealthPoints <= opponent_Hero.DamagePoints &&
+                current_Hero.HealthPoints + Healing_Amount > opponent_Hero.DamagePoints)
+                return 2;
+            else
+                return ran.Next(1, 2);
+        }
         public Duel() 
         {
             gameType = GameType.EvE;
@@ -153,92 +169,138 @@ namespace GameCore
 
         public static void Dueling()
         {
-            while (Hero1.isAlive && Hero2.isAlive)
+            Hero current_Hero;
+            Hero opponent_Hero;
+            int i = 0;
+
+            if (gameType == GameType.PvP)
             {
-                
-                Hero current_Hero;
-                Hero opponent_Hero;
-
-                if (gameType == GameType.PvP)
+                while (Hero1.isAlive && Hero2.isAlive)
                 {
-                    for (int i = 0; i < 2; i++)
+                    Menus.DisplayStatus(Hero1, Hero2, i);
+
+                    if (i == 0)
                     {
-                        Menus.DisplayStatus(Hero1, Hero2, i);
-
-                        if (i == 0)
-                        {
-                            current_Hero = Hero1;
-                            opponent_Hero = Hero2;
-                        }
-                        else
-                        {
-                            current_Hero = Hero2;
-                            opponent_Hero = Hero1;
-                        }
-
-                        switch (ReadKey())
-                        {
-                            case 1:
-                                opponent_Hero.GetDamage(current_Hero.DamagePoints);
-                                current_Hero.EquatePrevHealthPoints();
-                                Menus.DisplayStatus(Hero1, Hero2, i);
-                                break;
-                            case 2:
-                                current_Hero.GetHealth(15);
-                                opponent_Hero.EquatePrevHealthPoints();
-                                Menus.DisplayStatus(Hero1, Hero2, i);
-                                break;
-                            case -1:
-                                current_Hero.EquatePrevHealthPoints();
-                                opponent_Hero.EquatePrevHealthPoints();
-                                Menus.DisplayStatus(Hero1, Hero2, -1);
-                                Console.ReadKey();
-                                return;
-                        }
+                        current_Hero = Hero1;
+                        opponent_Hero = Hero2;
+                    }
+                    else
+                    {
+                        current_Hero = Hero2;
+                        opponent_Hero = Hero1;
                     }
 
-
-                }
-                else if (gameType == GameType.PvE)
-                {
-                    for (int i = 0; i < 2; i++)
+                    switch (ReadKey())
                     {
-                        if (i == 0)
-                        {
-                            current_Hero = Hero1;
-                            opponent_Hero = Hero2;
-                        }
-                        else
-                        {
-                            current_Hero = Hero2;
-                            opponent_Hero = Hero1;
-                        }
-
-                        switch (ReadKey())
-                        {
-                            case 1:
-                                opponent_Hero.GetDamage(current_Hero.DamagePoints);
-                                break;
-                            case 2:
-                                current_Hero.GetHealth(15);
-                                break;
-                            case -1:
-                                Menus.DisplayStatus(Hero1, Hero2, -1);
-                                Console.ReadKey();
-                                return;
-                        }
+                        case 1:
+                            opponent_Hero.GetDamage(current_Hero.DamagePoints);
+                            current_Hero.EquatePrevHealthPoints();
+                            break;
+                        case 2:
+                            current_Hero.GetHealth();
+                            opponent_Hero.EquatePrevHealthPoints();
+                            break;
+                        case -1:
+                            current_Hero.EquatePrevHealthPoints();
+                            opponent_Hero.EquatePrevHealthPoints();
+                            Menus.Duel_End_Screen(Hero1, Hero2);
+                            return;
                     }
-                }
-                else if (gameType == GameType.EvE)
-                {
-
+                    i = i == 0 ? 1 : 0;
+                    Menus.DisplayStatus(Hero1, Hero2, i);
                 }
             }
+            else if (gameType == GameType.PvE)
+            {
+                while (Hero1.isAlive && Hero2.isAlive)
+                {
+                    Menus.DisplayStatus(Hero1, Hero2, i);
+                    if (i == 0)
+                    {
+                        current_Hero = Hero1;
+                        opponent_Hero = Hero2;
+                    }
+                    else
+                    {
+                        current_Hero = Hero2;
+                        opponent_Hero = Hero1;
+                    }
+                    if (i == 0)
+                    {
+                        switch (ReadKey())
+                        {
+                            case 1:
+                                opponent_Hero.GetDamage(current_Hero.DamagePoints);
+                                current_Hero.EquatePrevHealthPoints();
+                                break;
+                            case 2:
+                                current_Hero.GetHealth();
+                                opponent_Hero.EquatePrevHealthPoints();
+                                break;
+                            case -1:
+                                current_Hero.EquatePrevHealthPoints();
+                                opponent_Hero.EquatePrevHealthPoints();
+                                Menus.Duel_End_Screen(Hero1, Hero2);
+                                Console.ReadKey();
+                                return;
+                        }
+                    }
+                    else
+                    {
+                        Menus.PressAnyButton();
+                        switch (AI(current_Hero,opponent_Hero))
+                        {
+                            case 1:
+                                opponent_Hero.GetDamage(current_Hero.DamagePoints);
+                                current_Hero.EquatePrevHealthPoints();
+                                
+                                break;
+                            case 2:
+                                current_Hero.GetHealth();
+                                opponent_Hero.EquatePrevHealthPoints();
+                                break;
+                        }
+                    }
+                    i = i == 0 ? 1 : 0;
+                }
+            }
+            else if (gameType == GameType.EvE)
+            {
+                while (Hero1.isAlive && Hero2.isAlive)
+                {
+                    Menus.DisplayStatus(Hero1, Hero2, i);
 
-            Menus.DisplayStatus(Hero1, Hero2, -1);
-            Console.ReadKey();
+                    Menus.PressAnyButton();
+                    
+                    if (i == 0)
+                    {
+                        current_Hero = Hero1;
+                        opponent_Hero = Hero2;
+                    }
+                    else
+                    {
+                        current_Hero = Hero2;
+                        opponent_Hero = Hero1;
+                    }
+
+                    switch (AI(current_Hero, opponent_Hero))
+                    {
+                        case 1:
+                            opponent_Hero.GetDamage(current_Hero.DamagePoints);
+                            current_Hero.EquatePrevHealthPoints();
+                            break;
+                        case 2:
+                            current_Hero.GetHealth();
+                            opponent_Hero.EquatePrevHealthPoints();
+                            break;
+                    }
+
+                    i = i == 0 ? 1 : 0;
+                }
+
+            }
+            Menus.Duel_End_Screen(Hero1, Hero2);
         }
-
     }
     public class GameModes
     {
