@@ -44,12 +44,10 @@ namespace GameCore
         }
     }
 
-    public class Vanguard : Hero
+    public abstract class Vanguard : Hero
     {
-        public Vanguard(NamesID NameID) : base()
+        public Vanguard() : base()
         {
-            this.NameID = NameID;
-            this.Name = Constants.Names[(int)NameID];
             ClassID = ClassesID.Vanguard;
             MaxHealthPoints = (int)_MaxHealthPoints.Vanguard;
             HealthPoints = MaxHealthPoints;
@@ -78,12 +76,43 @@ namespace GameCore
         }
     }
 
-    public class Assassin : Hero
+    public class Kensei: Vanguard
     {
-        public Assassin(NamesID NameID) : base()
+        public Kensei(NamesID NameID) : base()
         {
             this.NameID = NameID;
-            this.Name = Constants.Names[(int)NameID];
+            Name = Constants.Names[(int)this.NameID];
+        }
+    }
+    public class Raider : Vanguard
+    {
+        public Raider(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            Name = Constants.Names[(int)this.NameID];
+        }
+    }
+    public class Tiandi : Vanguard
+    {
+        public Tiandi(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            Name = Constants.Names[(int)this.NameID];
+        }
+    }
+    public class Warden : Vanguard
+    {
+        public Warden(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            Name = Constants.Names[(int)this.NameID];
+        }
+    }
+
+    public abstract class Assassin : Hero
+    {
+        public Assassin() : base()
+        {
             ClassID = ClassesID.Assassin;
             MaxHealthPoints = (int)_MaxHealthPoints.Assassin;
             HealthPoints = MaxHealthPoints;
@@ -111,13 +140,43 @@ namespace GameCore
             }
         }
     }
-
-    public class Heavy : Hero
+    public class Berserker : Assassin
     {
-        public Heavy(NamesID NameID) : base()
+        public Berserker(NamesID NameID) : base()
         {
             this.NameID = NameID;
             this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Gladiator : Assassin
+    {
+        public Gladiator(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Orochi : Assassin
+    {
+        public Orochi(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Shinobi : Assassin
+    {
+        public Shinobi(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+
+    public abstract class Heavy : Hero
+    {
+        public Heavy() : base()
+        {
             ClassID = ClassesID.Heavy;
             MaxHealthPoints = (int)_MaxHealthPoints.Heavy;
             HealthPoints = MaxHealthPoints;
@@ -145,13 +204,43 @@ namespace GameCore
             }
         }
     }
-
-    public class Hybrid : Hero
+    public class Conqueror : Heavy
     {
-        public Hybrid(NamesID NameID) : base()
+        public Conqueror(NamesID NameID) : base()
         {
             this.NameID = NameID;
             this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Hitokiri : Heavy
+    {
+        public Hitokiri(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Jormungandr : Heavy
+    {
+        public Jormungandr(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Warlord : Heavy
+    {
+        public Warlord(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+
+    public abstract class Hybrid : Hero
+    {
+        public Hybrid() : base()
+        {
             ClassID = ClassesID.Hybrid;
             MaxHealthPoints = (int)_MaxHealthPoints.Hybrid;
             HealthPoints = MaxHealthPoints;
@@ -177,6 +266,38 @@ namespace GameCore
                 Console.SetCursorPosition(WindowWidth / 2 - 7, Line_Number++);
                 Console.WriteLine($"{i + 1}: {Constants.Names[i + 4 * (int)Constants.ClassesID.Hybrid]}.");
             }
+        }
+    }
+    public class Aramusha : Hybrid
+    {
+        public Aramusha(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Centurion : Hybrid
+    {
+        public Centurion(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Highlander : Hybrid
+    {
+        public Highlander(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
+        }
+    }
+    public class Valkyrie : Hybrid
+    {
+        public Valkyrie(NamesID NameID) : base()
+        {
+            this.NameID = NameID;
+            this.Name = Constants.Names[(int)NameID];
         }
     }
 }

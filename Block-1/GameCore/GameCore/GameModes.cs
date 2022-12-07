@@ -7,8 +7,66 @@ using static GameCore.Constants;
 
 namespace GameCore
 {
+    
     public class Duel
     {
+        static Hero GetHero(int Hero_ID)
+        {
+            Hero Hero1 = default;
+            switch (Hero_ID)
+            {
+                case 0:
+                    Hero1 = new Kensei((NamesID)Hero_ID);
+                    break;
+                case 1:
+                    Hero1 = new Raider((NamesID)Hero_ID);
+                    break;
+                case 2:
+                    Hero1 = new Tiandi((NamesID)Hero_ID);
+                    break;
+                case 3:
+                    Hero1 = new Warden((NamesID)Hero_ID);
+                    break;
+                case 4:
+                    Hero1 = new Berserker((NamesID)Hero_ID);
+                    break;
+                case 5:
+                    Hero1 = new Gladiator((NamesID)Hero_ID);
+                    break;
+                case 6:
+                    Hero1 = new Orochi((NamesID)Hero_ID);
+                    break;
+                case 7:
+                    Hero1 = new Conqueror((NamesID)Hero_ID);
+                    break;
+                case 8:
+                    Hero1 = new Conqueror((NamesID)Hero_ID);
+                    break;
+                case 9:
+                    Hero1 = new Hitokiri((NamesID)Hero_ID);
+                    break;
+                case 10:
+                    Hero1 = new Jormungandr((NamesID)Hero_ID);
+                    break;
+                case 11:
+                    Hero1 = new Warlord((NamesID)Hero_ID);
+                    break;
+                case 12:
+                    Hero1 = new Aramusha((NamesID)Hero_ID);
+                    break;
+                case 13:
+                    Hero1 = new Centurion((NamesID)Hero_ID);
+                    break;
+                case 14:
+                    Hero1 = new Highlander((NamesID)Hero_ID);
+                    break;
+                case 15:
+                    Hero1 = new Valkyrie((NamesID)Hero_ID);
+                    break;
+            }
+            return Hero1;
+        }
+
         static Hero Hero1;
         static Hero Hero2;
 
@@ -38,36 +96,8 @@ namespace GameCore
             int First_Hero_ID = ran.Next(Constants.Names.Length - 1);
             int Second_Hero_ID = ran.Next(Constants.Names.Length - 1);
 
-            switch (First_Hero_ID / 4)
-            {
-                case 0:
-                    Hero1 = new Vanguard((NamesID)First_Hero_ID);
-                    break;
-                case 1:
-                    Hero1 = new Assassin((NamesID)First_Hero_ID);
-                    break;
-                case 2:
-                    Hero1 = new Heavy((NamesID)First_Hero_ID);
-                    break;
-                case 3:
-                    Hero1 = new Hybrid((NamesID)First_Hero_ID);
-                    break;
-            }
-            switch (Second_Hero_ID / 4)
-            {
-                case 0:
-                    Hero2 = new Vanguard((NamesID)Second_Hero_ID);
-                    break;
-                case 1:
-                    Hero2 = new Assassin((NamesID)Second_Hero_ID);
-                    break;
-                case 2:
-                    Hero2 = new Heavy((NamesID)Second_Hero_ID);
-                    break;
-                case 3:
-                    Hero2 = new Hybrid((NamesID)Second_Hero_ID);
-                    break;
-            }
+            Hero1 = GetHero(First_Hero_ID);
+            Hero2 = GetHero(Second_Hero_ID);
         }
         public Duel(int First_Hero_ID)
         {
@@ -76,72 +106,16 @@ namespace GameCore
             Random ran = new Random();
             int Second_Hero_ID = ran.Next(Constants.Names.Length - 1);
 
-            switch (First_Hero_ID / 4)
-            {
-                case 0:
-                    Hero1 = new Vanguard((NamesID)First_Hero_ID);
-                    break;
-                case 1:
-                    Hero1 = new Assassin((NamesID)First_Hero_ID);
-                    break;
-                case 2:
-                    Hero1 = new Heavy((NamesID)First_Hero_ID);
-                    break;
-                case 3:
-                    Hero1 = new Hybrid((NamesID)First_Hero_ID);
-                    break;
-            }
-            switch (Second_Hero_ID / 4)
-            {
-                case 0:
-                    Hero2 = new Vanguard((NamesID)Second_Hero_ID);
-                    break;
-                case 1:
-                    Hero2 = new Assassin((NamesID)Second_Hero_ID);
-                    break;
-                case 2:
-                    Hero2 = new Heavy((NamesID)Second_Hero_ID);
-                    break;
-                case 3:
-                    Hero2 = new Hybrid((NamesID)Second_Hero_ID);
-                    break;
-            }
+            Hero1 = GetHero(First_Hero_ID);
+            Hero2 = GetHero(Second_Hero_ID);
 
         }
         public Duel(int First_Hero_ID, int Second_Hero_ID)
         {
             gameType = GameType.PvP;
 
-            switch (First_Hero_ID/4)
-            {
-                case 0:
-                    Hero1 = new Vanguard((NamesID)First_Hero_ID);
-                    break;
-                case 1:
-                    Hero1 = new Assassin((NamesID)First_Hero_ID);
-                    break;
-                case 2:
-                    Hero1 = new Heavy((NamesID)First_Hero_ID);
-                    break;
-                case 3:
-                    Hero1 = new Hybrid((NamesID)First_Hero_ID);
-                    break;
-            }
-            switch (Second_Hero_ID / 4)
-            {
-                case 0:
-                    Hero2 = new Vanguard((NamesID)Second_Hero_ID);
-                    break;
-                case 1:
-                    Hero2 = new Assassin((NamesID)Second_Hero_ID);
-                    break;
-                case 2:
-                    Hero2 = new Heavy((NamesID)Second_Hero_ID);
-                    break;
-                case 3:
-                    Hero2 = new Hybrid((NamesID)Second_Hero_ID);
-                    break;
-            }
+            Hero1 = GetHero(First_Hero_ID);
+            Hero2 = GetHero(Second_Hero_ID);
         }
 
         public static int ReadKey()
