@@ -7,7 +7,6 @@ using static GameCore.Constants;
 
 namespace GameCore
 {
-    
     public class Duel
     {
         static Hero GetHero(int Hero_ID)
