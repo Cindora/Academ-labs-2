@@ -10,10 +10,8 @@ namespace GameCore
 {
     class App
     {
-
         static void Main(string[] args)
         {
-            
             MenuLevel MenuLevel = MenuLevel.GameType;
             do
             {
@@ -35,8 +33,6 @@ namespace GameCore
                             break;
                     }
                 }
-
-
             } while (MenuLevel != MenuLevel.NULL);
         }
     }

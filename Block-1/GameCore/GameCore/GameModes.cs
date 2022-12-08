@@ -277,7 +277,6 @@ namespace GameCore
     }
     public class GameModes
     {
-
         public static MenuLevel PvP_Duel()
         {
             int[] PickedHeroes = new int[2];
@@ -303,8 +302,7 @@ namespace GameCore
 
             return MenuLevel.GameType;
         }
-
-
+        
         public static MenuLevel PvE_Duel()
         {
             int PickedHeroes;

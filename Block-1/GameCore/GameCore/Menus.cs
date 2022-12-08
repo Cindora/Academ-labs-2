@@ -27,7 +27,6 @@ namespace GameCore
             Console.Write("ESC чтобы вернуться. ");
             Console.SetCursorPosition(20, WindowHeight - 1);
         }
-
         public static void PressAnyButton()
         {
             Console.SetCursorPosition(0, WindowHeight - 2);
