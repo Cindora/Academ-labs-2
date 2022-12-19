@@ -18,8 +18,19 @@ namespace MyMenu
             {
                 Console.Write("_");
             }
-            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[0].Length / 2, Line_Number);
-            Console.WriteLine(MenuStr[Line_Number]);
+            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[0][Line_Number].Length / 2 + 1, Line_Number);
+            Console.WriteLine(MenuStr[0][Line_Number]);
+        }
+        static void SecondHead(int ID)
+        {
+            Line_Number = 2;
+            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[ID][0].Length / 2, Line_Number);
+            Console.Write(MenuStr[ID][0]);
+
+            Line_Number += 2;
+            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[1][1].Length / 2, Line_Number);
+            Console.Write(MenuStr[ID][1]);
+            Line_Number += 2;
         }
         public static void Footer()
         {
@@ -38,14 +49,14 @@ namespace MyMenu
         public static MainMenuChoise MainMenu()
         {
             Header();
-            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[1].Length / 2, 2);
-            Console.WriteLine(MenuStr[1]);
-            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[3].Length / 2, 4);
-            Console.WriteLine(MenuStr[3]);
-            for (int i = 4; i < 7; i++)
+
+            SecondHead(1);
+
+            int cursor_X = WindowWidth / 2 - 14;
+            for (int i = 2; i < 5; i++)
             {
-                Console.SetCursorPosition(WindowWidth / 2 - 14, 1 + i);
-                Console.WriteLine($"{i - 3}: {MenuStr[i]}.");
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write($"{i-1}: {MenuStr[1][i]}.");
             }
             Footer();
 
@@ -56,11 +67,11 @@ namespace MyMenu
                 switch (cur_key)
                 {
                     case ConsoleKey.D1:
-                        return Constants.MainMenuChoise.Products_View;
+                        return MainMenuChoise.Products_View;
                     case ConsoleKey.D2:
-                        return Constants.MainMenuChoise.Dishes_View;
+                        return MainMenuChoise.Dishes_View;
                     case ConsoleKey.D3:
-                        return Constants.MainMenuChoise.Fast_Day_Menu;
+                        return MainMenuChoise.Fast_Day_Menu;
                     case ConsoleKey.Escape:
                         break;
                     default:
@@ -68,9 +79,118 @@ namespace MyMenu
                         break;
                 }
             } while (cur_key != ConsoleKey.Escape);
-            return Constants.MainMenuChoise.NULL;
+            return MainMenuChoise.NULL;
         }
 
-        
+        public static ProductsMenuChoise ProductsMenu()
+        {
+            Header();
+
+            SecondHead(2);
+
+            int cursor_X = WindowWidth / 2 - 14;
+            for (int i = 2; i < 4; i++)
+            {
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write($"{i - 1}: {MenuStr[2][i]}.");
+            }
+
+            Console.SetCursorPosition(cursor_X, ++Line_Number);
+            Console.Write(MenuStr[2][MenuStr[2].Length - 1]);
+            Footer();
+
+            ConsoleKey cur_key;
+            do
+            {
+                cur_key = Console.ReadKey().Key;
+                switch (cur_key)
+                {
+                    case ConsoleKey.D1:
+                        return ProductsMenuChoise.AddProduct;
+                    case ConsoleKey.D2:
+                        return ProductsMenuChoise.DelProduct;
+                    case ConsoleKey.Escape:
+                        break;
+                    default:
+                        Footer();
+                        break;
+                }
+            } while (cur_key != ConsoleKey.Escape);
+            return ProductsMenuChoise.NULL;
+        }
+
+        public static int GetProductID()
+        {
+            ConsoleKey cur_key;
+            do
+            {
+                cur_key = Console.ReadKey().Key;
+                switch (cur_key)
+                {
+                    case ConsoleKey.D1:
+                    case ConsoleKey.D2:
+                    case ConsoleKey.D3:
+                    case ConsoleKey.D4:
+                    case ConsoleKey.D5:
+                    case ConsoleKey.D6:
+                    case ConsoleKey.D7:
+                    case ConsoleKey.D8:
+                    case ConsoleKey.D9:
+                        return (int)cur_key - 49; ;
+                    case ConsoleKey.Escape:
+                        break;
+                    default:
+                        Footer();
+                        break;
+                }
+            } while (cur_key != ConsoleKey.Escape);
+            return -1;
+        }
+
+
+        public static Product GetProductData()
+        {
+            Header();
+
+            SecondHead(3);
+
+            int cursor_X = WindowWidth / 2 - 14;
+
+            Footer();
+            try
+            {
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[3][2]);
+                string ProductName = Console.ReadLine();
+                if (ProductName.Length < 1)
+                    throw new ArgumentException();
+
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[3][3]);
+                Console.SetCursorPosition(0, Line_Number++);
+                for (int i = 0; i < Food_Names.Length;i++)
+                {
+                    Console.Write($"{i+1}: {Food_Names[i]} | ");
+                }
+                int ProductID = int.Parse(Console.ReadLine()) - 1;
+                if (ProductID < 0 || ProductID > 9)
+                    throw new ArgumentException();
+
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[3][4]);
+                int ProductWeight = int.Parse(Console.ReadLine());
+                if (ProductWeight <= 0)
+                    throw new ArgumentException();
+
+
+                return new Product(ProductName, ProductID, ProductWeight);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Вы ввели некорректные данные.");
+                PressAnyButton();
+                return null;
+            }
+        }
     }
 }
