@@ -52,11 +52,10 @@ namespace MyMenu
 
             SecondHead(1);
 
-            int cursor_X = WindowWidth / 2 - 14;
             for (int i = 2; i < 5; i++)
             {
                 Console.SetCursorPosition(cursor_X, Line_Number++);
-                Console.Write($"{i-1}: {MenuStr[1][i]}.");
+                Console.Write($"{i - 1}: {MenuStr[1][i]}.");
             }
             Footer();
 
@@ -82,13 +81,13 @@ namespace MyMenu
             return MainMenuChoise.NULL;
         }
 
-        public static ProductsMenuChoise ProductsMenu()
+        public static ProductsMenuChoise ProductsMenu(List<Product> ProductList)
         {
             Header();
 
             SecondHead(2);
 
-            int cursor_X = WindowWidth / 2 - 14;
+
             for (int i = 2; i < 4; i++)
             {
                 Console.SetCursorPosition(cursor_X, Line_Number++);
@@ -97,6 +96,9 @@ namespace MyMenu
 
             Console.SetCursorPosition(cursor_X, ++Line_Number);
             Console.Write(MenuStr[2][MenuStr[2].Length - 1]);
+
+            DisplayProducts(ProductList);
+
             Footer();
 
             ConsoleKey cur_key;
@@ -154,8 +156,6 @@ namespace MyMenu
 
             SecondHead(3);
 
-            int cursor_X = WindowWidth / 2 - 14;
-
             Footer();
             try
             {
@@ -168,9 +168,9 @@ namespace MyMenu
                 Console.SetCursorPosition(cursor_X, Line_Number++);
                 Console.Write(MenuStr[3][3]);
                 Console.SetCursorPosition(0, Line_Number++);
-                for (int i = 0; i < Food_Names.Length;i++)
+                for (int i = 0; i < Food_Names.Length; i++)
                 {
-                    Console.Write($"{i+1}: {Food_Names[i]} | ");
+                    Console.Write($"{i + 1}: {Food_Names[i]} | ");
                 }
                 int ProductID = int.Parse(Console.ReadLine()) - 1;
                 if (ProductID < 0 || ProductID > 9)
@@ -190,6 +190,15 @@ namespace MyMenu
                 Console.WriteLine("Вы ввели некорректные данные.");
                 PressAnyButton();
                 return null;
+            }
+        }
+
+        public static void DisplayProducts(List<Product> ProductList)
+        {
+            foreach (Product product in ProductList)
+            {
+                Console.SetCursorPosition(cursor_X, ++Line_Number);
+                Console.Write($"{product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}");
             }
         }
     }

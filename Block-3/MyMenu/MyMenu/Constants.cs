@@ -49,5 +49,7 @@ namespace MyMenu
         public static ushort Line_Number;
 
         public static int Healing_Amount = 15;
+
+        public static int cursor_X = WindowWidth / 2 - 14;
     }
 }

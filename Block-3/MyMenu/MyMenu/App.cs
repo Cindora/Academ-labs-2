@@ -22,7 +22,7 @@ namespace MyMenu
                     switch(Menus.MainMenu())
                     {
                         case MainMenuChoise.Products_View:
-                            switch(Menus.ProductsMenu())
+                            switch(Menus.ProductsMenu(ProductList))
                             {
                                 case ProductsMenuChoise.AddProduct:
                                     var tmp = Menus.GetProductData();
@@ -44,7 +44,7 @@ namespace MyMenu
                             break;
 
                     }
-                    MenuLevel = MenuLevel.NULL;
+                    
                 }
             } while (MenuLevel != MenuLevel.NULL);
         }
