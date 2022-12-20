@@ -15,6 +15,9 @@ namespace MyMenu
         {
             MenuLevel MenuLevel = MenuLevel.GameType;
             var ProductList = new List<Product>();
+            ProductList.Add(new Product("Молоко", 0, 1200));
+            ProductList.Add(new Product("Мясо", 2, 500));
+            ProductList.Add(new Product("Морковь", 7, 700));
             do
             {
                 if (MenuLevel == MenuLevel.GameType)
@@ -31,7 +34,7 @@ namespace MyMenu
 
                                     break;
                                 case ProductsMenuChoise.DelProduct:
-                                    
+                                    Menus.RemoveProduct(ProductList);
                                     break;
                             }
                             

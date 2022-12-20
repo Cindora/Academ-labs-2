@@ -28,7 +28,7 @@ namespace MyMenu
             Console.Write(MenuStr[ID][0]);
 
             Line_Number += 2;
-            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[1][1].Length / 2, Line_Number);
+            Console.SetCursorPosition(WindowWidth / 2 - MenuStr[ID][1].Length / 2, Line_Number);
             Console.Write(MenuStr[ID][1]);
             Line_Number += 2;
         }
@@ -152,13 +152,14 @@ namespace MyMenu
 
         public static Product GetProductData()
         {
-            Header();
-
-            SecondHead(3);
-
-            Footer();
             try
             {
+                Header();
+
+                SecondHead(3);
+
+                Footer();
+
                 Console.SetCursorPosition(cursor_X, Line_Number++);
                 Console.Write(MenuStr[3][2]);
                 string ProductName = Console.ReadLine();
@@ -192,13 +193,42 @@ namespace MyMenu
                 return null;
             }
         }
+        public static void RemoveProduct(List<Product> ProductList)
+        {
+            try
+            {
+                Header();
+
+                SecondHead(4);
+
+                Footer();
+
+                Line_Number++;
+                DisplayProducts(ProductList);
+
+                Line_Number -= 4;
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[4][2]);
+
+                int ID = int.Parse(Console.ReadLine());
+                
+                
+                ProductList.RemoveAt(ID-1);
+            }
+            catch
+            {
+                Console.WriteLine("Вы ввели некорректные данные.");
+                PressAnyButton();
+            }
+        }
 
         public static void DisplayProducts(List<Product> ProductList)
         {
+            int i = 1;
             foreach (Product product in ProductList)
             {
                 Console.SetCursorPosition(cursor_X, ++Line_Number);
-                Console.Write($"{product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}");
+                Console.Write($"{i++} | {product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}");
             }
         }
     }
