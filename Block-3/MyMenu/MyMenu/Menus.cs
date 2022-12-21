@@ -267,5 +267,150 @@ namespace MyMenu
                 Console.Write($"{i++} | {product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}");
             }
         }
+
+        public static DishesMenuChoise DishesMenu(List<Dish> DishList)
+        {
+            Header();
+
+            SecondHead(6);
+
+
+            for (int i = 2; i < 5; i++)
+            {
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write($"{i - 1}: {MenuStr[6][i]}.");
+            }
+
+            Console.SetCursorPosition(cursor_X, ++Line_Number);
+            Console.Write(MenuStr[6][MenuStr[6].Length - 1]);
+
+            DisplayDishes(DishList, false);
+
+            Footer();
+
+            ConsoleKey cur_key;
+            do
+            {
+                cur_key = Console.ReadKey().Key;
+                switch (cur_key)
+                {
+                    case ConsoleKey.D1:
+                        return DishesMenuChoise.AddDish;
+                    case ConsoleKey.D2:
+                        return DishesMenuChoise.DelDish;
+                    case ConsoleKey.D3:
+                        return DishesMenuChoise.ViewAvailableDishes;
+                    case ConsoleKey.Escape:
+                        break;
+                    default:
+                        Footer();
+                        break;
+                }
+            } while (cur_key != ConsoleKey.Escape);
+            return DishesMenuChoise.NULL;
+        }
+
+        public static Dish GetDishData()
+        {
+            try
+            {
+                Header();
+
+                SecondHead(7);
+
+                Footer();
+
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[7][2]);
+                string DishName = Console.ReadLine();
+                if (DishName.Length < 1)
+                    throw new ArgumentException();
+                Line_Number += 2;
+                Console.SetCursorPosition(0, Line_Number);
+                for (int i = 0; i < Food_Names.Length; i++)
+                {
+                    Console.Write($"{i + 1}: {Food_Names[i]} | ");
+                }
+                Line_Number -= 2;
+                Console.SetCursorPosition(cursor_X, Line_Number);
+                Console.Write(MenuStr[7][3]);
+
+                string[] recipe = Console.ReadLine().Split(new char[] { ' ', ','}, StringSplitOptions.RemoveEmptyEntries);
+
+                if (recipe.Length / 2 == 0)
+                    throw new ArgumentException();
+
+                int[] Recipe = new int[recipe.Length];
+                for (int i = 0; i < recipe.Length/2; ++i)
+                {
+                    Recipe[i*2] = int.Parse(recipe[i*2]) - 1;
+                    Recipe[i*2+1] = int.Parse(recipe[i*2+1]);
+                    if (Recipe[i * 2 + 1] <= 0)
+                        continue;
+                    if (Recipe[i * 2] < 0 || Recipe[i * 2] > Food_Names.Length - 1)
+                        throw new ArgumentException();
+                }
+                
+                return new Dish(DishName, Recipe);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Вы ввели некорректные данные.");
+                PressAnyButton();
+                return null;
+            }
+        }
+
+        public static void DisplayDishes(List<Dish> DishList, bool DisplayRecipes)
+        {
+            int i = 1;
+            foreach (Dish dish in DishList)
+            {
+                Console.SetCursorPosition(cursor_X, ++Line_Number);
+                Console.Write($"{i++} | {dish.Name}, общий вес порции: {dish.Weight}");
+                if (DisplayRecipes)
+                    DisplayDishRecipe(dish);
+
+            }
+        }
+
+        public static void DisplayDishRecipe(Dish dish)
+        {
+                for (int i = 0; i < dish.ShowRecipe().Length / 2; i++)
+                {
+                    Console.SetCursorPosition(cursor_X, ++Line_Number);
+                    Console.Write($"  - {Food_Names[dish.ShowRecipe()[i * 2]]} - {dish.ShowRecipe()[i * 2 + 1]}");
+                }
+                Line_Number++;
+        }
+
+        public static void RemoveDishes(List<Dish> DishList)
+        {
+            try
+            {
+                Header();
+
+                SecondHead(8);
+
+                Footer();
+
+                Line_Number++;
+                DisplayDishes(DishList, false);
+
+                Line_Number = 6;
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[8][2]);
+
+                int ID = int.Parse(Console.ReadLine());
+
+
+                DishList.RemoveAt(ID - 1);
+            }
+            catch
+            {
+                Console.WriteLine("Вы ввели некорректные данные.");
+                PressAnyButton();
+            }
+        }
     }
 }

@@ -14,30 +14,33 @@ namespace MyMenu
 
         public enum Meals
         {
-            Milk_Porridge, Goulash, Pasta, Salad, Bacon_and_Eggs, Seafood_Gumbo
+            Milk_Porridge, Goulash, Pasta, Bacon_and_Eggs, Seafood_Gumbo
         };
-
-        public static string[] Meals_Names = { "Milk Porridge", "Goulash", "Pasta", "Salad", "Bacon and Eggs", "Seafood Gumbo" };
 
         public static int[][] Recipes =
         {
-            new []{ (int)Meals.Milk_Porridge, (int)Food.Milk, 1000, (int)Food.Rice, 500 },
-            new []{ (int)Meals.Goulash, (int)Food.Meat, 1100, (int)Food.Potato, 800, (int)Food.Carrot, 200 },
-            new []{ (int)Meals.Pasta, (int)Food.Noodles, 400, (int)Food.Cheese, 50 },
-            new []{ (int)Meals.Bacon_and_Eggs, (int)Food.Meat, 200, (int)Food.Eggs, 4 },
-            new []{ (int)Meals.Seafood_Gumbo, (int)Food.Seafood, 1000, (int)Food.Onion, 300 }
+            new []{ (int)Food.Milk, 1000, (int)Food.Rice, 500}, //Milk Porridge
+            new []{ (int)Food.Meat, 1100, (int)Food.Potato, 800, (int)Food.Carrot, 200 }, //Goulash
+            new []{ (int)Food.Noodles, 400, (int)Food.Cheese, 50 }, //Pasta
+            new []{ (int)Food.Meat, 200, (int)Food.Eggs, 4 }, //Bacon_and_Eggs
+            new []{ (int)Food.Seafood, 1000, (int)Food.Onion, 300} //Seafood_Gumbo
         };
 
 
         public static string[][] MenuStr = { new string[] { "Моё меню" },
-            new string[] {"Главная страница", "Выберите желаемое действие:", "Открыть хранилище продуктов", "Показать рецепты блюд","Составить быстрое меню на день" },
+            new string[] {"Главная страница", "Выберите желаемое действие:", "Открыть хранилище продуктов", "Показать блюда и рецепты","Составить быстрое меню на день" },
             new string[]{ "Хранилище продуктов", "Выберите желаемое действие:", "Добавить продукт", "Изменить вес продукта", "Удалить продукт", "Текущее хранилище:"},
             new string[] { "Хранилище продуктов", "Введите данные продукта:", "Название: ", "Тип: ", "Вес(Объём/количество): ", },
-            new string[] { "Хранилище продуктов", "Удаление продукта", "Введите номер продукта: " },
-            new string[] { "Хранилище продуктов", "Изменение продукта", "Введите номер продукта и его новый вес(X, Y): " }
+            new string[] { "Хранилище продуктов", "Удаление продукта", "Укажите номер продукта: " },
+            new string[] { "Хранилище продуктов", "Изменение продукта", "Укажите номер продукта и его новый вес(X, Y): " },
+            new string[]{ "Блюда и рецепты", "Выберите желаемое действие:", "Добавить рецепт", "Удалить рецепт", "Показать доступные блюда", "База рецептов:" },
+            new string[] { "Блюда и рецепты", "Введите рецепт блюда:", "Название: ", "Рецепт(Продукты, их количество): ", },
+            new string[] { "Блюда и рецепты", "Удаление рецепта блюда", "Укажите номер рецепта: " },
         };
 
         public enum ProductsMenuChoise { AddProduct, ChangeProduct, DelProduct, NULL };
+
+        public enum DishesMenuChoise { AddDish, DelDish, ViewAvailableDishes, NULL };
 
         public enum TimesOfDay { Breakfast, Lunch, Dinner };
 

@@ -31,18 +31,21 @@ namespace MyMenu
     public class Dish
     {
         public string Name;
-        public int ID;
         public int Weight;
-        public Constants.TimesOfDay[] TimesOfDay;
-        public Dish(string Name, int ID, Product[] Food, Constants.TimesOfDay[] TimesOfDay)
+        private int[] Recipe;
+
+        public Dish(string Name,  int[] Recipe)
         {
             this.Name = Name;
-            this.ID = ID;
-            this.TimesOfDay = new Constants.TimesOfDay[TimesOfDay.Length];
-            for (int i = 0; i<TimesOfDay.Length; i++)
+            for (int i = 0; i<Recipe.Length/2; i++)
             {
-                this.TimesOfDay[i] = TimesOfDay[i];
+                Weight += Recipe[i * 2 + 1];
             }
+            this.Recipe = Recipe;
+        }
+        public int[] ShowRecipe()
+        {
+            return Recipe;
         }
     }
 }
