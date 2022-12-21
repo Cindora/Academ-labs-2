@@ -46,7 +46,7 @@ namespace MyMenu
             Console.ReadKey();
         }
 
-        public static MainMenuChoise MainMenu()
+        public static MenuLevel MainMenu()
         {
             Header();
 
@@ -66,11 +66,11 @@ namespace MyMenu
                 switch (cur_key)
                 {
                     case ConsoleKey.D1:
-                        return MainMenuChoise.Products_View;
+                        return MenuLevel.ProductsMenu;
                     case ConsoleKey.D2:
-                        return MainMenuChoise.Dishes_View;
+                        return MenuLevel.DishesMenu;
                     case ConsoleKey.D3:
-                        return MainMenuChoise.Fast_Day_Menu;
+                        return MenuLevel.Fast_Day_Menu;
                     case ConsoleKey.Escape:
                         break;
                     default:
@@ -78,7 +78,7 @@ namespace MyMenu
                         break;
                 }
             } while (cur_key != ConsoleKey.Escape);
-            return MainMenuChoise.NULL;
+            return MenuLevel.NULL;
         }
 
         public static ProductsMenuChoise ProductsMenu(List<Product> ProductList)
@@ -88,7 +88,7 @@ namespace MyMenu
             SecondHead(2);
 
 
-            for (int i = 2; i < 4; i++)
+            for (int i = 2; i < 5; i++)
             {
                 Console.SetCursorPosition(cursor_X, Line_Number++);
                 Console.Write($"{i - 1}: {MenuStr[2][i]}.");
@@ -110,6 +110,8 @@ namespace MyMenu
                     case ConsoleKey.D1:
                         return ProductsMenuChoise.AddProduct;
                     case ConsoleKey.D2:
+                        return ProductsMenuChoise.ChangeProduct;
+                    case ConsoleKey.D3:
                         return ProductsMenuChoise.DelProduct;
                     case ConsoleKey.Escape:
                         break;
@@ -120,7 +122,7 @@ namespace MyMenu
             } while (cur_key != ConsoleKey.Escape);
             return ProductsMenuChoise.NULL;
         }
-
+        
         public static int GetProductID()
         {
             ConsoleKey cur_key;
@@ -193,6 +195,40 @@ namespace MyMenu
                 return null;
             }
         }
+
+        public static void ChangeProduct(List<Product> ProductList)
+        {
+            try
+            {
+                Header();
+
+                SecondHead(5);
+
+                Footer();
+
+                Line_Number++;
+                DisplayProducts(ProductList);
+
+                Line_Number = 6;
+                Console.SetCursorPosition(cursor_X, Line_Number++);
+                Console.Write(MenuStr[5][2]);
+                
+                string[] str = Console.ReadLine().Split(new char[] { ' ', ','}, StringSplitOptions.RemoveEmptyEntries);
+
+                int ID = int.Parse(str[0]);
+                int Weight = int.Parse(str[1]);
+                if (Weight <= 0)
+                    ProductList.RemoveAt(ID - 1);
+                else
+                    ProductList[ID - 1].Weight = Weight;
+            }
+            catch
+            {
+                Console.WriteLine("Вы ввели некорректные данные.");
+                PressAnyButton();
+            }
+        }
+
         public static void RemoveProduct(List<Product> ProductList)
         {
             try
@@ -206,7 +242,7 @@ namespace MyMenu
                 Line_Number++;
                 DisplayProducts(ProductList);
 
-                Line_Number -= 4;
+                Line_Number = 6;
                 Console.SetCursorPosition(cursor_X, Line_Number++);
                 Console.Write(MenuStr[4][2]);
 

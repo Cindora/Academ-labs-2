@@ -31,17 +31,17 @@ namespace MyMenu
 
         public static string[][] MenuStr = { new string[] { "Моё меню" },
             new string[] {"Главная страница", "Выберите желаемое действие:", "Открыть хранилище продуктов", "Показать рецепты блюд","Составить быстрое меню на день" },
-            new string[]{ "Хранилище продуктов", "Выберите желаемое действие:", "Добавить продукт в хранилище", "Удалить продукт из хранилища", "Текущее хранилище:"},
+            new string[]{ "Хранилище продуктов", "Выберите желаемое действие:", "Добавить продукт", "Изменить вес продукта", "Удалить продукт", "Текущее хранилище:"},
             new string[] { "Хранилище продуктов", "Введите данные продукта:", "Название: ", "Тип: ", "Вес(Объём/количество): ", },
-            new string[] { "Хранилище продуктов", "Удаление продукта", "Введите номер продукта: " }
+            new string[] { "Хранилище продуктов", "Удаление продукта", "Введите номер продукта: " },
+            new string[] { "Хранилище продуктов", "Изменение продукта", "Введите номер продукта и его новый вес(X, Y): " }
         };
 
-        public enum MainMenuChoise { Products_View, Dishes_View, Fast_Day_Menu, NULL };
-        public enum ProductsMenuChoise { AddProduct, DelProduct, NULL };
+        public enum ProductsMenuChoise { AddProduct, ChangeProduct, DelProduct, NULL };
 
         public enum TimesOfDay { Breakfast, Lunch, Dinner };
 
-        public enum MenuLevel { NULL, GameType, ClassesDescriptions, HeroesPick };
+        public enum MenuLevel { NULL, MainMenu, ProductsMenu, DishesMenu, Fast_Day_Menu };
 
         public static int WindowWidth = Console.WindowWidth;
 
