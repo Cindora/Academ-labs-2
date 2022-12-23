@@ -41,7 +41,7 @@ namespace MyMenu
 
         public static void PressAnyButton()
         {
-            Console.SetCursorPosition(0, WindowHeight - 2);
+            Console.SetCursorPosition(0, WindowHeight - 1);
             Console.Write("Для продолжения нажмите любую кнопку. ");
             Console.ReadKey();
         }
@@ -361,6 +361,46 @@ namespace MyMenu
             }
         }
 
+        public static void ViewAvailableDishes(List<Dish> DishList, List<Product> ProductList)
+        {
+            Header();
+
+            SecondHead(9);
+
+            if (ProductList.Any())
+            {
+                int j = 1;
+                bool isAvail;
+
+                foreach (Dish dish in DishList)
+                {
+                    var tmpRecipe = dish.ShowRecipe();
+
+                    for (int i = 0; i < tmpRecipe.Length / 2; i++)
+                    {
+                        tmpRecipe[i * 2 + 1] -= ProductList[0].Print_Total_Weight_By_ID(tmpRecipe[i * 2]);
+                    }
+
+                    isAvail = true;
+                    for (int k = 0; k < tmpRecipe.Length / 2; k++)
+                    {
+                        if (tmpRecipe[k * 2 + 1] > 0)
+                        {
+                            isAvail = false;
+                            break;
+                        }
+                    }
+
+                    if (isAvail)
+                    {
+                        Console.SetCursorPosition(cursor_X, Line_Number++);
+                        Console.Write($"{j++} | {dish.Name}, общий вес порции: {dish.Weight}");
+                    }
+                }
+            }
+            PressAnyButton();
+        }
+
         public static void DisplayDishes(List<Dish> DishList, bool DisplayRecipes)
         {
             int i = 1;
@@ -372,6 +412,63 @@ namespace MyMenu
                     DisplayDishRecipe(dish);
 
             }
+        }
+
+        public static void FastDayMenu(List<Dish> DishList, List<Product> ProductList)
+        {
+            Header();
+
+            SecondHead(10);
+
+            if (ProductList.Any())
+            {
+                int j = 1;
+                int DayDishesWeight = 0;
+                bool isAvail;
+
+                foreach (Dish dish in DishList)
+                {
+                    var tmpRecipe = dish.ShowRecipe();
+                    
+                    isAvail = true;
+                    for (int i = 0; i < tmpRecipe.Length / 2; i++)
+                    {
+                        tmpRecipe[i * 2 + 1] -= ProductList[0].Print_Total_Weight_By_ID(tmpRecipe[i * 2]);
+
+                        if (tmpRecipe[i * 2 + 1] > 0)
+                        {
+                            isAvail = false;
+                            break;
+                        }
+                    }
+
+                    
+                    if (isAvail)
+                    {
+                        Console.SetCursorPosition(cursor_X, Line_Number++);
+                        Console.Write($"{j++} | {dish.Name}.");
+                        DayDishesWeight += dish.Weight;
+
+                        if (DayDishesWeight>=1000)
+                        {
+                            Line_Number++;
+                            Console.SetCursorPosition(cursor_X, Line_Number++);
+                            Console.Write($" Общий вес блюд: {DayDishesWeight}.");
+                            break;
+                        }
+                    }
+                }
+                if (DayDishesWeight < 1000)
+                {
+                    Line_Number++;
+                    Console.SetCursorPosition(cursor_X, Line_Number++);
+                    Console.Write("Не удалось составить полноценное меню.");
+                    Console.SetCursorPosition(cursor_X, Line_Number++);
+                    Console.Write("Добавьте больше продуктов в хранилище и попробуйте снова.");
+                }
+            }
+
+            PressAnyButton();
         }
 
         public static void DisplayDishRecipe(Dish dish)

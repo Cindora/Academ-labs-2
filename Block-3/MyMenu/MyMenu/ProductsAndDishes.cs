@@ -26,6 +26,13 @@ namespace MyMenu
         {
             return Total_Weight[ID];
         }
+
+        public void Minus_Total_Weight_By_ID(int ID, int WeightChange)
+        {
+            Total_Weight[ID] -= WeightChange;
+            if (Total_Weight[ID] < 0)
+                Total_Weight[ID] = 0;
+        }
     }
 
     public class Dish

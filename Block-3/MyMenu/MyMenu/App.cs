@@ -17,11 +17,16 @@ namespace MyMenu
             
             var ProductList = new List<Product>();
             
-            ProductList.Add(new Product("Молоко «Эконива»", 0, 1200));
-            ProductList.Add(new Product("Свинина «Мираторг»", 2, 500));
-            ProductList.Add(new Product("Молоко «Простоквашино»", 0, 970));
+            ProductList.Add(new Product("Молоко «Эконива»", 0, 200));
+            ProductList.Add(new Product("Свинина «Мираторг»", 2, 50));
+            ProductList.Add(new Product("Сыр «Добров»", 1, 45));
+            ProductList.Add(new Product("Картофель «Беларусь»", 5, 970));
             ProductList.Add(new Product("Морковь «Фруктовощи»", 7, 700));
-            ProductList.Add(new Product("Курица «Петровская птицефабрика»", 2, 500));
+            ProductList.Add(new Product("Курица «Петровская птицефабрика»", 2, 530));
+            ProductList.Add(new Product("Яйца «Петровская птицефабрика»", 4, 150));
+            ProductList.Add(new Product("Макароны «Хлебный дом»", 9, 450));
+            ProductList.Add(new Product("Рис «Мистраль»", 8, 800));
+
 
             var DishList = new List<Dish>();
             DishList.Add(new Dish("Молочная каша", Recipes[0]));
@@ -70,7 +75,7 @@ namespace MyMenu
                             Menus.RemoveDishes(DishList);
                             break;
                         case DishesMenuChoise.ViewAvailableDishes:
-                            
+                            Menus.ViewAvailableDishes(DishList, ProductList);
                             break;
                         case DishesMenuChoise.NULL:
                             MenuLevel = MenuLevel.MainMenu;
@@ -79,6 +84,7 @@ namespace MyMenu
                 }
                 else if (MenuLevel == MenuLevel.Fast_Day_Menu)
                 {
+                    Menus.FastDayMenu(DishList, ProductList);
                     MenuLevel = MenuLevel.MainMenu;
                 }
 
