@@ -31,6 +31,10 @@ namespace Bash
                               "[OUTPUT] < [FILENAME]  – стандартное перенаправления вывода\n\n" +
 
                               "wc [FILENAME] – показывает на экране количество строк, слов и байт в файле\n\n");
+
+            BashCore BashCore = new BashCore();
+            BashCore.Run();
+
         }
     }
 }
