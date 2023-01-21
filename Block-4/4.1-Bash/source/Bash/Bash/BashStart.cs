@@ -33,7 +33,7 @@ namespace Bash
                               "wc [FILENAME] – показывает на экране количество строк, слов и байт в файле\n\n");
 
             BashCore BashCore = new BashCore();
-            BashCore.Run();
+            BashCore.RunBash();
 
         }
     }
