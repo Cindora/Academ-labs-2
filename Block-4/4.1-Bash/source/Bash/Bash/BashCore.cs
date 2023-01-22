@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Metadata;
+using static Bash.InputParser;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Bash
@@ -10,19 +11,39 @@ namespace Bash
 
         public void RunBash()
         {
-            string[] commands;
+            List<(string Command, Priorities Priority)> commands_list;
 
             while (true)
             {
                 Console.Write(": ");
 
-                commands = Console.ReadLine().Split();
+                //commands = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                int commands_length = commands.Length;
+                InputParser parser = new InputParser();
 
-                RunCommand(commands);
-                
-                //foreach (string el in input_str)
+                commands_list = parser.Parse(Console.ReadLine());
+
+                foreach(var command in commands_list)
+                {
+                    if ((command.Priority == Priorities.Always) ||
+                        (command.Priority == Priorities.And && LastRunCommandStatus == 0) ||
+                        (command.Priority == Priorities.Or && LastRunCommandStatus != 0))
+                    {
+                        Console.WriteLine($">{command.Command}<");
+                        RunCommand(command.Command.Split(' '));
+                    }
+                }
+
+
+                //int commands_length = commands.Length;
+
+                //if (commands.Length != 0)
+                //{
+                //    RunCommand(commands);
+                //}
+
+
+                //foreach (string el in commands)
                 //{
                 //    Console.WriteLine(el);
                 //}
@@ -38,7 +59,7 @@ namespace Bash
                 case "pwd":
 
                     string pwd = Directory.GetCurrentDirectory();
-                    
+
                     if (commands.Length == 1)
                     {
                         Console.WriteLine(pwd);
@@ -96,8 +117,8 @@ namespace Bash
                     }
                     else if (commands.Length == 2)
                     {
-                            Console.WriteLine(commands[1]);
-                            LastRunCommandStatus = 0;
+                        Console.WriteLine(commands[1]);
+                        LastRunCommandStatus = 0;
                     }
                     else
                     {
@@ -122,7 +143,7 @@ namespace Bash
 
                         // todo
                     }
-                    
+
                     break;
 
                 case "false":
@@ -142,7 +163,7 @@ namespace Bash
                     break;
 
                 case "wc":
-                    
+
                     if (commands.Length == 1)
                     {
                         Console.WriteLine("Invalid argument (File path required)");
@@ -159,7 +180,7 @@ namespace Bash
                             using (var stream_reader = new StreamReader(filepath))
                             {
                                 string str;
-                                while ( (str = stream_reader.ReadLine()) != null)
+                                while ((str = stream_reader.ReadLine()) != null)
                                 {
                                     lines_count++;
                                     string[] str_array = str.Split(' ');
@@ -190,17 +211,11 @@ namespace Bash
 
                 default:
 
-                    if (commands[0] == "")
-                    {
-                        ;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Unknown command");
-                        LastRunCommandStatus = -1;
+                    Console.WriteLine("Unknown command");
+                    LastRunCommandStatus = -1;
 
-                        // todo
-                    }
+                    // todo
+
                     break;
             }
         }
