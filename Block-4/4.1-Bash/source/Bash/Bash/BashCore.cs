@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Reflection.Metadata;
+using static Bash.CommandParser;
 using static Bash.InputParser;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -7,11 +9,16 @@ namespace Bash
 {
     class BashCore
     {
-        public int LastRunCommandStatus;
+        
+
+        public int LastRunCommandStatus = 0;
+
+        
 
         public void RunBash()
         {
             List<(string Command, Priorities Priority)> commands_list;
+            CurrentCommand? current_command;
 
             while (true)
             {
@@ -21,19 +28,32 @@ namespace Bash
 
                 InputParser parser = new InputParser();
 
-                commands_list = parser.Parse(Console.ReadLine());
+                commands_list = parser.InputParse(Console.ReadLine());
 
-                foreach(var command in commands_list)
+                CommandParser commandParser = new CommandParser();
+                if (commands_list != null)
                 {
-                    if ((command.Priority == Priorities.Always) ||
-                        (command.Priority == Priorities.And && LastRunCommandStatus == 0) ||
-                        (command.Priority == Priorities.Or && LastRunCommandStatus != 0))
+                    foreach (var command in commands_list)
                     {
-                        Console.WriteLine($">{command.Command}<");
-                        RunCommand(command.Command.Split(' '));
+                        if ((command.Priority == Priorities.Always) ||
+                            (command.Priority == Priorities.And && LastRunCommandStatus == 0) ||
+                            (command.Priority == Priorities.Or && LastRunCommandStatus != 0))
+                        {
+                            current_command = commandParser.CommandParse(command.Command);
+                            
+                            if (current_command != null)
+                            {
+                                RunCommand(current_command.Command.Split(' '));
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid argument");
+                            }
+                            
+                        }
+                        
                     }
                 }
-
 
                 //int commands_length = commands.Length;
 
@@ -54,7 +74,7 @@ namespace Bash
 
         private void RunCommand(string[] commands)
         {
-            switch (commands[0])
+            switch (commands[0].ToLower())
             {
                 case "pwd":
 
@@ -150,7 +170,7 @@ namespace Bash
 
                     if (commands.Length == 1)
                     {
-                        LastRunCommandStatus = 0;
+                        LastRunCommandStatus = -1;
                     }
                     else
                     {
