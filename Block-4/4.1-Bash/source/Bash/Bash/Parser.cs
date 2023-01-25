@@ -97,16 +97,17 @@
 
             string[] commands_splited = commands.Split(separators, StringSplitOptions.None);
 
-            int com_spl_len = commands_splited.Length;
+            int comm_spl_len = commands_splited.Length;
 
-            if (com_spl_len == 1)
+            if (comm_spl_len == 1)
             {
                 commands_parsed_with_directions = new CurrentCommand(commands_splited[0].Trim(), null, Direction.None);
                 return commands_parsed_with_directions;
             }
-            else if (com_spl_len == 2)
+            else if (comm_spl_len == 2)
             {
-                if (commands[commands_splited[0].Length+1] == '>')
+                if (commands.Length >= commands_splited[0].Length + 2 &&
+                    commands[commands_splited[0].Length+1] == '>')
                 {
                     commands_parsed_with_directions = new CurrentCommand(commands_splited[0].Trim(),
                         commands_splited[1].Trim(), Direction.Doublequote);

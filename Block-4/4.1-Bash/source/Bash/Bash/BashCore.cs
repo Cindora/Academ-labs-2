@@ -9,28 +9,24 @@ namespace Bash
 {
     class BashCore
     {
-        
-
         public int LastRunCommandStatus = 0;
-
-        
 
         public void RunBash()
         {
+            InputParser inputParser = new InputParser();
+            CommandParser commandParser = new CommandParser();
+
             List<(string Command, Priorities Priority)> commands_list;
             CurrentCommand? current_command;
+
+            string command_output;
 
             while (true)
             {
                 Console.Write(": ");
 
-                //commands = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                commands_list = inputParser.InputParse(Console.ReadLine());
 
-                InputParser parser = new InputParser();
-
-                commands_list = parser.InputParse(Console.ReadLine());
-
-                CommandParser commandParser = new CommandParser();
                 if (commands_list != null)
                 {
                     foreach (var command in commands_list)
@@ -40,40 +36,67 @@ namespace Bash
                             (command.Priority == Priorities.Or && LastRunCommandStatus != 0))
                         {
                             current_command = commandParser.CommandParse(command.Command);
-                            
+
                             if (current_command != null)
                             {
-                                RunCommand(current_command.Command.Split(' '));
+                                command_output = RunCommand(current_command.Command.Split(' '));
+
+                                if (command_output != "" &&
+                                    current_command.Direction == Direction.None)
+                                {
+                                    Console.WriteLine(command_output);
+                                }
+                                else if (current_command.Direction == Direction.Quote)
+                                {
+                                    try
+                                    {
+                                        using (StreamWriter fileWriter = new StreamWriter(current_command.Filename, false))
+                                        {
+                                            fileWriter.WriteLine(command_output);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine("Invalid file path");
+                                    }
+
+                                }
+                                else if (current_command.Direction == Direction.Doublequote)
+                                {
+                                    try
+                                    {
+                                        using (StreamWriter fileWriter = new StreamWriter(current_command.Filename, true))
+                                        {
+                                            fileWriter.WriteLine(command_output);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine("Invalid file path");
+                                    }
+
+                                }
+                                else if (command_output != "" &&
+                                    current_command.Direction == Direction.Backquote)
+                                {
+                                    Console.WriteLine(command_output);
+                                }
                             }
                             else
                             {
                                 Console.WriteLine("Invalid argument");
                             }
-                            
                         }
-                        
                     }
                 }
-
-                //int commands_length = commands.Length;
-
-                //if (commands.Length != 0)
-                //{
-                //    RunCommand(commands);
-                //}
-
-
-                //foreach (string el in commands)
-                //{
-                //    Console.WriteLine(el);
-                //}
             }
-
-
         }
+        
 
-        private void RunCommand(string[] commands)
+        private string RunCommand(string[] commands)
         {
+            string output = "";
+
             switch (commands[0].ToLower())
             {
                 case "pwd":
@@ -82,12 +105,12 @@ namespace Bash
 
                     if (commands.Length == 1)
                     {
-                        Console.WriteLine(pwd);
+                        output += pwd;
                         LastRunCommandStatus = 0;
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
@@ -99,7 +122,7 @@ namespace Bash
 
                     if (commands.Length == 1)
                     {
-                        Console.WriteLine("Invalid argument (File path required)");
+                        output += "Invalid argument (File path required)";
                         LastRunCommandStatus = -1;
                     }
                     else if (commands.Length == 2)
@@ -109,19 +132,19 @@ namespace Bash
                             using (var stream_reader = new StreamReader(commands[1]))
                             {
                                 var filetext = stream_reader.ReadToEnd();
-                                Console.WriteLine(filetext);
+                                output += filetext;
                                 LastRunCommandStatus = 0;
                             }
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine("Invalid file path");
+                            output += "Invalid file path";
                             LastRunCommandStatus = -1;
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
@@ -132,17 +155,16 @@ namespace Bash
 
                     if (commands.Length == 1)
                     {
-                        Console.WriteLine();
                         LastRunCommandStatus = 0;
                     }
                     else if (commands.Length == 2)
                     {
-                        Console.WriteLine(commands[1]);
+                        output += commands[1];
                         LastRunCommandStatus = 0;
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
@@ -158,7 +180,7 @@ namespace Bash
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
@@ -174,10 +196,25 @@ namespace Bash
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
+                    }
+
+                    break;
+
+                case "$?":
+
+                    if (commands.Length == 1)
+                    {
+                        output += LastRunCommandStatus.ToString();
+                        LastRunCommandStatus = 0;
+                    }
+                    else
+                    {
+                        output += "Invalid argument (Excess of arguments)";
+                        LastRunCommandStatus = -1;
                     }
 
                     break;
@@ -186,7 +223,7 @@ namespace Bash
 
                     if (commands.Length == 1)
                     {
-                        Console.WriteLine("Invalid argument (File path required)");
+                        output += "Invalid argument (File path required)";
                         LastRunCommandStatus = -1;
                     }
                     else if (commands.Length == 2)
@@ -208,20 +245,20 @@ namespace Bash
                                 }
                             }
 
-                            bytes_count = new FileInfo(filepath).Length; //Считаем количество байт в файле
+                            bytes_count = new FileInfo(filepath).Length;
 
-                            Console.WriteLine($"{lines_count} lines, {words_count} words, {bytes_count} bytes.");
+                            output += $"{lines_count} lines, {words_count} words, {bytes_count} bytes.";
                             LastRunCommandStatus = 0;
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine("Invalid file path");
+                            output += "Invalid file path";
                             LastRunCommandStatus = -1;
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument (Excess of arguments)");
+                        output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
 
                         // todo
@@ -231,13 +268,15 @@ namespace Bash
 
                 default:
 
-                    Console.WriteLine("Unknown command");
+                    output += "Unknown command";
                     LastRunCommandStatus = -1;
 
                     // todo
 
                     break;
             }
+
+            return output;
         }
     }
 }
