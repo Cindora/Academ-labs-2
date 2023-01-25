@@ -1,12 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Reflection.Metadata;
-using static Bash.CommandParser;
-using static Bash.InputParser;
-using static System.Net.Mime.MediaTypeNames;
+﻿using static Bash.InputParser;
 
 namespace Bash
 {
+    internal class BashStart
+    {
+        public void Start()
+        {
+            Console.WriteLine("Доступные команды:\n\n" +
+
+                              "pwd - отобразить текущий рабочий каталог\n" +
+                              "cat [FILENAME] - вывести содержимое файла по станд. каналу вывода\n" +
+                              "echo [INPUT]   - вывести свои аргументы по станд. каналу вывода\n\n" +
+
+                              "true  - возврат нуля (успех)\n" +
+                              "false - возврат не-ноля (неудача)\n\n" +
+
+                              "$? - переменная, содержащая код возврата последней запущенной команды\n" +
+                              "(not implemented) $  - присваивание и использование локальных переменных сессии\n\n" +
+
+                              "&& – Первая команда исполняется всегда, вторая — в случае успешного завершения первой\n" +
+                              "|| – Первая команда исполняется всегда, вторая — в случае неудачного завершения первой\n" +
+                              ";  – Команды исполняются всегда\n\n" +
+
+                              "[OUTPUT] > [FILENAME]  – создаёт файл и записывает в него вывод\n" +
+                              "[OUTPUT] >> [FILENAME] – дописывает вывод в конец файла\n" +
+                              "[OUTPUT] < [FILENAME]  – стандартное перенаправления вывода\n\n" +
+
+                              "wc [FILENAME] – показывает на экране количество строк, слов и байт в файле\n\n");
+
+            BashCore BashCore = new BashCore();
+            BashCore.RunBash();
+        }
+    }
+
     class BashCore
     {
         public int LastRunCommandStatus = 0;
@@ -39,7 +65,7 @@ namespace Bash
 
                             if (current_command != null)
                             {
-                                command_output = RunCommand(current_command.Command.Split(' '));
+                                command_output = RunCommand(current_command.Command);
 
                                 if (command_output != "" &&
                                     current_command.Direction == Direction.None)
@@ -93,8 +119,9 @@ namespace Bash
         }
         
 
-        private string RunCommand(string[] commands)
+        private string RunCommand(string command)
         {
+            string[] commands = command.Split(' ');
             string output = "";
 
             switch (commands[0].ToLower())
@@ -112,8 +139,6 @@ namespace Bash
                     {
                         output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
-
-                        // todo
                     }
 
                     break;
@@ -146,9 +171,8 @@ namespace Bash
                     {
                         output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
-
-                        // todo
                     }
+
                     break;
 
                 case "echo":
@@ -157,17 +181,11 @@ namespace Bash
                     {
                         LastRunCommandStatus = 0;
                     }
-                    else if (commands.Length == 2)
-                    {
-                        output += commands[1];
-                        LastRunCommandStatus = 0;
-                    }
                     else
                     {
-                        output += "Invalid argument (Excess of arguments)";
-                        LastRunCommandStatus = -1;
+                        output += command.Substring(5);
 
-                        // todo
+                        LastRunCommandStatus = 0;
                     }
 
                     break;
@@ -182,8 +200,6 @@ namespace Bash
                     {
                         output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
-
-                        // todo
                     }
 
                     break;
@@ -198,8 +214,6 @@ namespace Bash
                     {
                         output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
-
-                        // todo
                     }
 
                     break;
@@ -260,8 +274,6 @@ namespace Bash
                     {
                         output += "Invalid argument (Excess of arguments)";
                         LastRunCommandStatus = -1;
-
-                        // todo
                     }
 
                     break;
@@ -270,8 +282,6 @@ namespace Bash
 
                     output += "Unknown command";
                     LastRunCommandStatus = -1;
-
-                    // todo
 
                     break;
             }

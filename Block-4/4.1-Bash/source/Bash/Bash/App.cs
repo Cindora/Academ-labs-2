@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bash
+﻿namespace Bash
 {
     internal class App
     {
@@ -12,7 +6,6 @@ namespace Bash
         {
             BashStart Bash = new BashStart();
             Bash.Start();
-        
         }
     }
 }
