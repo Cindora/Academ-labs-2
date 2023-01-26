@@ -12,8 +12,12 @@ namespace MainMenuForms
 {
     public partial class FastDayMenu : Form
     {
-        public FastDayMenu()
+        List<Product> ProductList;
+        List<Dish> DishList;
+        public FastDayMenu(List<Product> ProductList, List<Dish> DishList)
         {
+            this.ProductList = ProductList;
+            this.DishList = DishList;
             InitializeComponent();
         }
 
@@ -30,10 +34,15 @@ namespace MainMenuForms
         private void button4_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MainMenu Main = new MainMenu();
+            MainMenu Main = new MainMenu(ProductList, DishList);
             Main.FormClosed += (s, args) => this.Close();
             Main.Show();
             Main.Focus();
+        }
+
+        private void FastDayMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -76,6 +76,7 @@
             this.Controls.Add(this.label2);
             this.Name = "FastDayMenu";
             this.Text = "Fast_Day_Menu";
+            this.Load += new System.EventHandler(this.FastDayMenu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

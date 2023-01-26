@@ -46,6 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddDish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDish.Designer.cs">
+      <DependentUpon>AddDish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AvailableDishes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AvailableDishes.Designer.cs">
+      <DependentUpon>AvailableDishes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="DelDish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DelDish.Designer.cs">
+      <DependentUpon>DelDish.cs</DependentUpon>
+    </Compile>
     <Compile Include="DishesMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +83,7 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductsAndDishes.cs" />
     <Compile Include="ProductsMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +92,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddDish.resx">
+      <DependentUpon>AddDish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AvailableDishes.resx">
+      <DependentUpon>AvailableDishes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DelDish.resx">
+      <DependentUpon>DelDish.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DishesMenu.resx">
       <DependentUpon>DishesMenu.cs</DependentUpon>
     </EmbeddedResource>
