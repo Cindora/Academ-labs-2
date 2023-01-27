@@ -46,35 +46,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddDish.cs">
+    <Compile Include="Dishes\AddDish.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddDish.Designer.cs">
+    <Compile Include="Dishes\AddDish.Designer.cs">
       <DependentUpon>AddDish.cs</DependentUpon>
     </Compile>
-    <Compile Include="AvailableDishes.cs">
+    <Compile Include="Products\AddProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AvailableDishes.Designer.cs">
+    <Compile Include="Products\AddProduct.Designer.cs">
+      <DependentUpon>AddProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dishes\AvailableDishes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dishes\AvailableDishes.Designer.cs">
       <DependentUpon>AvailableDishes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DelDish.cs">
+    <Compile Include="Products\ChangeProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DelDish.Designer.cs">
+    <Compile Include="Products\ChangeProduct.Designer.cs">
+      <DependentUpon>ChangeProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Dishes\DelDish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dishes\DelDish.Designer.cs">
       <DependentUpon>DelDish.cs</DependentUpon>
     </Compile>
-    <Compile Include="DishesMenu.cs">
+    <Compile Include="Products\DelProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DishesMenu.Designer.cs">
+    <Compile Include="Products\DelProduct.Designer.cs">
+      <DependentUpon>DelProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenus\DishesMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenus\DishesMenu.Designer.cs">
       <DependentUpon>DishesMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="FastDayMenu.cs">
+    <Compile Include="MainMenus\FastDayMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FastDayMenu.Designer.cs">
+    <Compile Include="MainMenus\FastDayMenu.Designer.cs">
       <DependentUpon>FastDayMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="MainMenu.cs">
@@ -84,33 +102,33 @@
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="ProductsAndDishes.cs" />
-    <Compile Include="ProductsMenu.cs">
+    <Compile Include="MainMenus\ProductsMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProductsMenu.Designer.cs">
+    <Compile Include="MainMenus\ProductsMenu.Designer.cs">
       <DependentUpon>ProductsMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddDish.resx">
+    <EmbeddedResource Include="Dishes\AddDish.resx">
       <DependentUpon>AddDish.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AvailableDishes.resx">
+    <EmbeddedResource Include="Dishes\AvailableDishes.resx">
       <DependentUpon>AvailableDishes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DelDish.resx">
+    <EmbeddedResource Include="Dishes\DelDish.resx">
       <DependentUpon>DelDish.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DishesMenu.resx">
+    <EmbeddedResource Include="MainMenus\DishesMenu.resx">
       <DependentUpon>DishesMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FastDayMenu.resx">
+    <EmbeddedResource Include="MainMenus\FastDayMenu.resx">
       <DependentUpon>FastDayMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProductsMenu.resx">
+    <EmbeddedResource Include="MainMenus\ProductsMenu.resx">
       <DependentUpon>ProductsMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
