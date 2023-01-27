@@ -86,8 +86,7 @@ namespace MainMenuForms
                     label6.Text = "Блюдо успешно добавлено.";
                     textBox1.Text = "";
                     textBox2.Text = "";
-                }
-                    
+                }  
                 else
                     label6.Text = "Вы ввели некорректные данные.";
             }
@@ -109,6 +108,11 @@ namespace MainMenuForms
             DishMenu.FormClosed += (s, args) => this.Close();
             DishMenu.Show();
             DishMenu.Focus();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

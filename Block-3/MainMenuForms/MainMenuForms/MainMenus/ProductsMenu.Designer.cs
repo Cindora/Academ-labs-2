@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.dishListLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label3
@@ -67,6 +68,7 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "Изменить вес продукта";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -100,11 +102,12 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Добавить продукт";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.button4.Location = new System.Drawing.Point(12, 505);
+            this.button4.Location = new System.Drawing.Point(12, 605);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(87, 36);
             this.button4.TabIndex = 11;
@@ -112,11 +115,22 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // dishListLabel
+            // 
+            this.dishListLabel.AutoSize = true;
+            this.dishListLabel.Font = new System.Drawing.Font("Times New Roman", 11F);
+            this.dishListLabel.Location = new System.Drawing.Point(220, 398);
+            this.dishListLabel.Name = "dishListLabel";
+            this.dishListLabel.Size = new System.Drawing.Size(15, 21);
+            this.dishListLabel.TabIndex = 28;
+            this.dishListLabel.Text = " ";
+            // 
             // ProductsMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(782, 553);
+            this.ClientSize = new System.Drawing.Size(782, 653);
+            this.Controls.Add(this.dishListLabel);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -140,5 +154,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label dishListLabel;
     }
 }

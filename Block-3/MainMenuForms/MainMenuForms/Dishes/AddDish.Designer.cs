@@ -113,6 +113,7 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "1 - Milk, 2 - Cheese, 3 - Meat, 4 - Seafood, 5 - Eggs,\r\n6 - Potato, 7 - Onion, 8 " +
     "- Carrot, 9 - Rice, 10 - Noodles";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 

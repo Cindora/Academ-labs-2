@@ -59,7 +59,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(227, 373);
+            this.button1.Location = new System.Drawing.Point(214, 228);
             this.button1.Margin = new System.Windows.Forms.Padding(5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(379, 50);
@@ -104,7 +104,7 @@
             // 
             this.dishListLabel.AutoSize = true;
             this.dishListLabel.Font = new System.Drawing.Font("Times New Roman", 9.5F);
-            this.dishListLabel.Location = new System.Drawing.Point(210, 234);
+            this.dishListLabel.Location = new System.Drawing.Point(210, 340);
             this.dishListLabel.Name = "dishListLabel";
             this.dishListLabel.Size = new System.Drawing.Size(13, 19);
             this.dishListLabel.TabIndex = 26;
@@ -114,7 +114,7 @@
             // 
             this.commandResult.AutoSize = true;
             this.commandResult.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.commandResult.Location = new System.Drawing.Point(260, 449);
+            this.commandResult.Location = new System.Drawing.Point(255, 292);
             this.commandResult.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.commandResult.Name = "commandResult";
             this.commandResult.Size = new System.Drawing.Size(18, 26);

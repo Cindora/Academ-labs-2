@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MainMenuForms.Constants;
 
 namespace MainMenuForms
 {
@@ -19,16 +20,15 @@ namespace MainMenuForms
             this.ProductList = ProductList;
             this.DishList = DishList;
             InitializeComponent();
-        }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+            string output = "";
+            int i = 1;
+            foreach (Product product in ProductList)
+            {
+                output += $"{i++} | {product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}\n";
+            }
 
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
+            dishListLabel.Text = output;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -43,6 +43,32 @@ namespace MainMenuForms
         private void ProductsMenu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Hide();
+            AddProduct AddProduct = new AddProduct(ProductList, DishList);
+            AddProduct.FormClosed += (s, args) => this.Close();
+            AddProduct.Show();
+            AddProduct.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ChangeProduct ChangeProduct = new ChangeProduct(ProductList, DishList);
+            ChangeProduct.FormClosed += (s, args) => this.Close();
+            ChangeProduct.Show();
+            ChangeProduct.Focus();
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            DelProduct DelProduct = new DelProduct(ProductList, DishList);
+            DelProduct.FormClosed += (s, args) => this.Close();
+            DelProduct.Show();
+            DelProduct.Focus();
         }
     }
 }

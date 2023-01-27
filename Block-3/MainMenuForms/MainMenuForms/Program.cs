@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static MainMenuForms.Constants;
 
@@ -37,14 +36,15 @@ namespace MainMenuForms
             Application.Run(new MainMenu(ProductList, DishList));
         }
 
-        public static void DisplayProducts(List<Product> ProductList)
+        public static string DisplayProducts(List<Product> ProductList)
         {
+            string output = "";
             int i = 1;
             foreach (Product product in ProductList)
             {
-                
-                Console.Write($"{i++} | {product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}");
+                output += $"{i++} | {product.Name} ({Food_Names[product.ID]}), кол-во: {product.Weight}\n";
             }
+            return output;
         }
 
         public static string DisplayDishes(List<Dish> DishList)

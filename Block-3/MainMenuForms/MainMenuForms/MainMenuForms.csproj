@@ -131,6 +131,15 @@
     <EmbeddedResource Include="MainMenus\ProductsMenu.resx">
       <DependentUpon>ProductsMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Products\AddProduct.resx">
+      <DependentUpon>AddProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\ChangeProduct.resx">
+      <DependentUpon>ChangeProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Products\DelProduct.resx">
+      <DependentUpon>DelProduct.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
