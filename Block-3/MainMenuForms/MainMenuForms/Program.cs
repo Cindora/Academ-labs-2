@@ -24,6 +24,7 @@ namespace MainMenuForms
 
 
             var DishList = new List<Dish>();
+
             DishList.Add(new Dish("Молочная каша", Constants.Recipes[0]));
             DishList.Add(new Dish("Гуляш", Constants.Recipes[1]));
             DishList.Add(new Dish("Паста", Constants.Recipes[2]));
@@ -59,122 +60,5 @@ namespace MainMenuForms
             }
             return output;
         }
-
-        public static void ViewAvailableDishes(List<Dish> DishList, List<Product> ProductList)
-        {
-            if (ProductList.Any())
-            {
-                int j = 1;
-                bool isAvail;
-
-                foreach (Dish dish in DishList)
-                {
-                    var tmpRecipe = dish.ShowRecipe();
-
-                    for (int i = 0; i < tmpRecipe.Length / 2; i++)
-                    {
-                        tmpRecipe[i * 2 + 1] -= ProductList[0].Print_Total_Weight_By_ID(tmpRecipe[i * 2]);
-                    }
-
-                    isAvail = true;
-                    for (int k = 0; k < tmpRecipe.Length / 2; k++)
-                    {
-                        if (tmpRecipe[k * 2 + 1] > 0)
-                        {
-                            isAvail = false;
-                            break;
-                        }
-                    }
-
-                    if (isAvail)
-                    {
-                        
-                        Console.Write($"{j++} | {dish.Name}, общий вес порции: {dish.Weight}");
-                    }
-                }
-            }
-        }
-
-        public static void FastDayMenu(List<Dish> DishList, List<Product> ProductList)
-        {
-            if (ProductList.Any())
-            {
-                int j = 1;
-                int DayDishesWeight = 0;
-                bool isAvail;
-
-                foreach (Dish dish in DishList)
-                {
-                    var tmpRecipe = dish.ShowRecipe();
-
-                    isAvail = true;
-                    for (int i = 0; i < tmpRecipe.Length / 2; i++)
-                    {
-                        tmpRecipe[i * 2 + 1] -= ProductList[0].Print_Total_Weight_By_ID(tmpRecipe[i * 2]);
-
-                        if (tmpRecipe[i * 2 + 1] > 0)
-                        {
-                            isAvail = false;
-                            break;
-                        }
-                    }
-
-
-                    if (isAvail)
-                    {
-                        
-                        Console.Write($"{j++} | {dish.Name}.");
-                        DayDishesWeight += dish.Weight;
-
-                        if (DayDishesWeight >= 1000)
-                        {
-                            
-                            Console.Write($" Общий вес блюд: {DayDishesWeight}.");
-                            break;
-                        }
-                    }
-                }
-                if (DayDishesWeight < 1000)
-                {
-                    
-                    Console.Write("Не удалось составить полноценное меню.");
-                    
-                    Console.Write("Добавьте больше продуктов в хранилище и попробуйте снова.");
-                }
-            }
-
-        }
-
-        public static void DisplayDishRecipe(Dish dish)
-        {
-            for (int i = 0; i < dish.ShowRecipe().Length / 2; i++)
-            {
-                Console.Write($"  - {Food_Names[dish.ShowRecipe()[i * 2]]} - {dish.ShowRecipe()[i * 2 + 1]}");
-            }
-           
-        }
-
-        public static void RemoveDishes(List<Dish> DishList)
-        {
-            try
-            {
-
-               
-                DisplayDishes(DishList);
-
-                Console.Write(MenuStr[8][2]);
-
-                int ID = int.Parse(Console.ReadLine());
-
-
-                DishList.RemoveAt(ID - 1);
-            }
-            catch
-            {
-                Console.WriteLine("Вы ввели некорректные данные.");
-            }
-        }
     }
-
-    
 }
