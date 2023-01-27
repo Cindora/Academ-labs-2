@@ -71,7 +71,7 @@
             // 
             this.dishListLabel.AutoSize = true;
             this.dishListLabel.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.dishListLabel.Location = new System.Drawing.Point(211, 174);
+            this.dishListLabel.Location = new System.Drawing.Point(252, 174);
             this.dishListLabel.Name = "dishListLabel";
             this.dishListLabel.Size = new System.Drawing.Size(15, 21);
             this.dishListLabel.TabIndex = 29;
