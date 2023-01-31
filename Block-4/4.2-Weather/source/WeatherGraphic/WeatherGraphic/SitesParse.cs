@@ -46,10 +46,7 @@ namespace WeatherGraphic
             }
             else
             {
-                for (int i= 0; i < temperature.Length; i++)
-                {
-                    temperature[i] = -9999;
-                }
+                throw new Exception();
             }
         }
     }
@@ -80,30 +77,15 @@ namespace WeatherGraphic
             {
                 var parsedRequest = JObject.Parse(request.Response)["list"];
 
-                //var id = Math.Round(Convert.ToDouble(parsedRequest[15]["main"]["temp"]) - 273.15, 2);
-
                 for (int i = 0; i < 6; i++)
                 {
                     temperature[i] = Math.Round(Convert.ToDouble(parsedRequest[i * 6]["main"]["temp"]) - 273.15, 2);
                 }
-
-                //var data = parsedRequest["data"]["timelines"][0]["intervals"];
-
-                //int i = 0;
-                //foreach (var values in data)
-                //{
-                //    temperature[i++] = Convert.ToDouble(values["values"]["temperature"]);
-                //}
             }
             else
             {
-                for (int i = 0; i < temperature.Length; i++)
-                {
-                    temperature[i] = -9999;
-                }
+                throw new Exception();
             }
-
         }
-
     }
 }

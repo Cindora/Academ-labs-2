@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SmartFormat.Core.Output;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace WeatherGraphic
 {
@@ -26,10 +28,22 @@ namespace WeatherGraphic
             output += $"\t\t\t{tomorrowIoSite.siteName}: {string.Join("  ", tomorrowIoSite.temperature)}\n";
             output += $"{openWeatherMapSite.siteName}: {string.Join("  ", openWeatherMapSite.temperature)}\n";
 
-            label1.Text = output;
+            //chart1.Series[0].Points.AddXY(i, outputY);
+
+            for (int i = 0; i<6; i++)
+            {
+                var Y = (tomorrowIoSite.temperature[i] + openWeatherMapSite.temperature[i]) / 2;
+                chart1.Series[0].Points.AddY(Y);
+            }
+            
+        }
+        
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void chart1_Click(object sender, EventArgs e)
         {
 
         }
