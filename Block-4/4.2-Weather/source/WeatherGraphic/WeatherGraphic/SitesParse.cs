@@ -13,18 +13,17 @@ namespace WeatherGraphic
 {
     public class TomorrowIo
     {
-        string siteName;
+        public string siteName;
+        public double[] temperature = new double[6];
+
         string apiKey;
         string url;
-        public string output;
-        double[] temperature = new double[6];
-
         Request request;
          
         public TomorrowIo(Request request)
         {
             siteName = "Tomorrow.io";
-            url = "https://api.tomorrow.io/v4/timelines?location=30.2642,59.8944&fields=temperature&timesteps=1d&endTime=nowPlus5d&units=metric&apikey=";
+            url = "https://api.tomorrow.io/v4/timelines?location=59.8944,30.2642&fields=temperature&timesteps=1d&endTime=nowPlus5d&units=metric&apikey=";
             apiKey = "qX7tcu2J8lZtCtB4G4WToYI3VvzpMzLV";
 
             this.request = request;
@@ -57,12 +56,11 @@ namespace WeatherGraphic
 
     public class OpenWeatherMap
     {
-        string siteName;
+        public string siteName;
+        public double[] temperature = new double[6];
+
         string apiKey;
         string url;
-        double[] temperature;
-        string output;
-
         Request request;
 
         public OpenWeatherMap(Request request)
@@ -80,16 +78,29 @@ namespace WeatherGraphic
 
             if (request.Response != null)
             {
-                var json = JObject.Parse(request.Response);
+                var parsedRequest = JObject.Parse(request.Response)["list"];
 
-                var list = json["list"];
-                output = Convert.ToString(list);
+                //var id = Math.Round(Convert.ToDouble(parsedRequest[15]["main"]["temp"]) - 273.15, 2);
 
-                temperature = new double[0];
+                for (int i = 0; i < 6; i++)
+                {
+                    temperature[i] = Math.Round(Convert.ToDouble(parsedRequest[i * 6]["main"]["temp"]) - 273.15, 2);
+                }
+
+                //var data = parsedRequest["data"]["timelines"][0]["intervals"];
+
+                //int i = 0;
+                //foreach (var values in data)
+                //{
+                //    temperature[i++] = Convert.ToDouble(values["values"]["temperature"]);
+                //}
             }
             else
             {
-
+                for (int i = 0; i < temperature.Length; i++)
+                {
+                    temperature[i] = -9999;
+                }
             }
 
         }

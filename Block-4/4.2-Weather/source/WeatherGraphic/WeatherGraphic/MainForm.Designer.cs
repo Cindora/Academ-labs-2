@@ -35,7 +35,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(228, 120);
+            this.label1.Location = new System.Drawing.Point(85, 152);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 26);
             this.label1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1039, 525);
             this.Controls.Add(this.label1);
             this.Name = "MainForm";
             this.Text = "Form1";
