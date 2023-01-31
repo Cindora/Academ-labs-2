@@ -6,6 +6,8 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using SmartFormat.Core.Output;
+using System.IO;
 
 namespace WeatherGraphic
 {
@@ -14,9 +16,11 @@ namespace WeatherGraphic
         string siteName;
         string apiKey;
         string url;
+        public string output;
+        double[] temperature = new double[6];
 
         Request request;
-
+         
         public TomorrowIo(Request request)
         {
             siteName = "Tomorrow.io";
@@ -26,20 +30,68 @@ namespace WeatherGraphic
             this.request = request;
         }
 
-        public double[] GetTemperatureArray()
+        public void GetTemperatureArray()
         {
             request.StartRequest(url + apiKey);
 
             if (request.Response != null)
             {
+                var parsedRequest = JObject.Parse(request.Response);
+                var data = parsedRequest["data"]["timelines"][0]["intervals"];
 
+                int i = 0;
+                foreach (var values in data)
+                {
+                    temperature[i++] = Convert.ToDouble(values["values"]["temperature"]);
+                }
             }
             else
             {
-                
+                for (int i= 0; i < temperature.Length; i++)
+                {
+                    temperature[i] = -9999;
+                }
+            }
+        }
+    }
+
+    public class OpenWeatherMap
+    {
+        string siteName;
+        string apiKey;
+        string url;
+        double[] temperature;
+        string output;
+
+        Request request;
+
+        public OpenWeatherMap(Request request)
+        {
+            siteName = "OpenWeatherMap.org";
+            url = "https://api.openweathermap.org/data/2.5/forecast?lat=59.8944&lon=30.2642&appid=";
+            apiKey = "9263a45a865eb9eaf08a8ee1f38fa190";
+
+            this.request = request;
+        }
+
+        public void GetTemperatureArray()
+        {
+            request.StartRequest(url + apiKey);
+
+            if (request.Response != null)
+            {
+                var json = JObject.Parse(request.Response);
+
+                var list = json["list"];
+                output = Convert.ToString(list);
+
+                temperature = new double[0];
+            }
+            else
+            {
+
             }
 
-            return new double[0];
         }
 
     }

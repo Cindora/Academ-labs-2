@@ -12,9 +12,17 @@ namespace WeatherGraphic
 {
     public partial class MainForm : Form
     {
+        TomorrowIo tomorrowIoSite = new TomorrowIo(new Request());
         public MainForm()
         {
             InitializeComponent();
+            tomorrowIoSite.GetTemperatureArray();
+            
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
